@@ -7,6 +7,7 @@
 package witcher.web;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -42,6 +43,8 @@ public class new_ad implements Serializable {
         Integer userId = SessionUtils.getUserId();
         guest user = guestBean.getGuestById(userId);
         adInstance.setOwner(user);
+        Date date = new Date();
+        adInstance.setDate(date);
         adBean.newAd(adInstance);
         return "index";
     }

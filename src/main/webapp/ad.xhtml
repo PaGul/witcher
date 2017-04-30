@@ -16,6 +16,10 @@
         <h:outputLink value="guest.xhtml">
             <f:param name="gquery" value="#{ad_instance.ad.owner.id}"/>
             <h:outputText value="#{ad_instance.ad.owner.login}"/>
+        </h:outputLink> <br/>
+        Date: #{ad_instance.ad.date} <br/>
+        <h:outputLink value="index.xhtml">
+            <h:outputText value="Back to main page"/>
         </h:outputLink>
     </h:body>
 </html>

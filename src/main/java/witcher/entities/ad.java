@@ -7,6 +7,7 @@
 package witcher.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -34,7 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ad.findById", query = "SELECT a FROM ad a WHERE a.id = :id"),
     @NamedQuery(name = "ad.findByHeader", query = "SELECT a FROM ad a WHERE a.header = :header"),
     @NamedQuery(name = "ad.findByText", query = "SELECT a FROM ad a WHERE a.text = :text"),
-    @NamedQuery(name = "ad.findByPrice", query = "SELECT a FROM ad a WHERE a.price = :price")})
+    @NamedQuery(name = "ad.findByPrice", query = "SELECT a FROM ad a WHERE a.price = :price"),
+    @NamedQuery(name = "ad.findByRating", query = "SELECT a FROM ad a WHERE a.rating = :rating"),
+    @NamedQuery(name = "ad.findByDate", query = "SELECT a FROM ad a WHERE a.date = :date")})
 public class ad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +61,15 @@ public class ad implements Serializable {
     @NotNull
     @Column(name = "price")
     private int price;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "rating")
+    private int rating;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
     @JoinColumn(name = "owner", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private guest owner;
@@ -67,11 +81,13 @@ public class ad implements Serializable {
         this.id = id;
     }
 
-    public ad(Long id, String header, String text, int price) {
+    public ad(Long id, String header, String text, int price, int rating, Date date) {
         this.id = id;
         this.header = header;
         this.text = text;
         this.price = price;
+        this.rating = rating;
+        this.date = date;
     }
 
     public Long getId() {
@@ -104,6 +120,22 @@ public class ad implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public guest getOwner() {
