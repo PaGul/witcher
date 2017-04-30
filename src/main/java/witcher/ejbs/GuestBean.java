@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import witcher.entities.guest;
 
 /**
@@ -27,11 +28,13 @@ public class GuestBean {
     }
 
     public List<guest> getGuests() {
-        return em.createQuery("SELECT g FROM guest g").getResultList();
+        TypedQuery <guest> query = em.createNamedQuery("guest.findAll", guest.class);
+        return query.getResultList();
     }
 
     public Boolean validate(String username, String password) {
-        return !(em.createQuery("Select g from guest g where g.login = ?1 and g.password = ?2").setParameter(1, username).setParameter(2, password).getResultList().isEmpty());
+        TypedQuery <guest> query = em.createNamedQuery("guest.findByLoginAndPassword", guest.class);
+        return !(query.setParameter("login", username).setParameter("password", password).getResultList().isEmpty());
     }
 
     public Boolean addGuest(guest guestInst) {
@@ -42,6 +45,11 @@ public class GuestBean {
     public Boolean checkIfQueryExists(String query) {
         return getGuestById(query) != null;
     }
+    
+    public guest getGuestById(int id) {
+        guest guest_instance = (guest) (em.find(guest.class, id));
+        return guest_instance;
+    }
 
     public guest getGuestById(String idStr) {
         Integer id = 0;
@@ -50,9 +58,7 @@ public class GuestBean {
         } catch (NumberFormatException e) {
 
         }
-
-        guest guest_instance = (guest) (em.find(guest.class, id));
-        return guest_instance;
+        return getGuestById(id);
     }
 
     public String getJobName(String id) {
@@ -69,7 +75,7 @@ public class GuestBean {
 
     
     public Boolean hasUserWithLogin(String login) {
-        return !(em.createQuery("SELECT g FROM guest g WHERE g.login = :login").setParameter("login", login).getResultList().isEmpty());
+        return getUserByLogin(login)!=null;
     }
 
     public boolean hasSecretQuestion(String login) {
@@ -88,8 +94,10 @@ public class GuestBean {
         return currUser.getId();
     }
 
+    
     private guest getUserByLogin(String login) {
-        List resultList = em.createQuery("SELECT g FROM guest g WHERE g.login = :login").setParameter("login", login).getResultList();
+        TypedQuery <guest> query = em.createNamedQuery("guest.findByLogin", guest.class);
+        List resultList = query.setParameter("login", login).getResultList();
         if (resultList.isEmpty()) {
             return null;
         }

@@ -39,19 +39,6 @@ public class ad_instance implements Serializable {
         return adBean.getAdById(getQuery());
     }
     
-    public ad adInstance = new ad();
-
-    public ad getAdInstance() {
-        return adInstance;
-    }
-
-    public void setAdInstance(ad adInstance) {
-        this.adInstance = adInstance;
-    }
-    
-    public String newAd() {
-        adBean.newAd(adInstance);
-        return "index";
-    }
+   
     
 }

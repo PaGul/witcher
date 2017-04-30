@@ -82,7 +82,7 @@ public class recoverpassword implements Serializable {
         if (secretAnswer.equals(guestBean.getSecretAnswer(id))) {
             return "changepassword";
         } else {
-            return "unsuccess";
+            return "wrong_secret_answer";
         }
     }
     
@@ -90,7 +90,7 @@ public class recoverpassword implements Serializable {
         if (guestBean.changePassword(id, password)==1){
             return "index";
         } else {
-            return "unsucess";
+            return "error";
         }
         
     }

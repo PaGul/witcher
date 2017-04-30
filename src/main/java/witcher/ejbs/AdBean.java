@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import witcher.entities.ad;
 
 /**
@@ -26,33 +27,35 @@ public class AdBean {
     }
     
     public List<ad> getAds() {
-        return em.createQuery("SELECT a FROM ad a").getResultList();
+        TypedQuery <ad> query = em.createNamedQuery("ad.findAll", ad.class);
+        return query.getResultList();
     }
     
-    public int checkIfQueryExists(String query) {
-        Long id = 0l;
+    private TypedQuery<ad> getAdsByIdQuery(String id) {
+        Long idLong = 0l;
         try {
-            id = Long.parseLong(query);
+            idLong = Long.parseLong(id);
         } catch (NumberFormatException e) {
-            
         }
-        List<ad> ads = em.createQuery("SELECT a FROM ad a WHERE a.id = :id").setParameter("id", id).getResultList();
+        TypedQuery <ad> query = em.createNamedQuery("ad.findById", ad.class);
+        TypedQuery<ad> adByIdQuery = query.setParameter("id", idLong);
+        return adByIdQuery;
+    }
+    
+    public int checkIfQueryExists(String id) {
+        List<ad> ads = getAdsByIdQuery(id).getResultList();
         return ads.size();
     }
     
-    public ad getAdById(String query) {
-        Long id = 0l;
-        try {
-            id = Long.parseLong(query);
-        } catch (NumberFormatException e) {
-            
-        }
-        ad ad_instance = (ad)(em.createQuery("SELECT a FROM ad a WHERE a.id = :id").setParameter("id", id).getSingleResult());
+    public ad getAdById(String id) {
+        ad ad_instance = (ad)getAdsByIdQuery(id).getSingleResult();
         return ad_instance;
     }
     
     public void newAd(ad adInstance) {
         em.persist(adInstance);
     }
+    
+    
     
 }

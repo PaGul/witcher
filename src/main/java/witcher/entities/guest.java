@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package witcher.entities;
 
 import java.io.Serializable;
@@ -14,13 +15,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,10 +30,20 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "guest")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "guest.findAll", query = "SELECT g FROM guest g")})
+    @NamedQuery(name = "guest.findAll", query = "SELECT g FROM guest g"),
+    @NamedQuery(name = "guest.findById", query = "SELECT g FROM guest g WHERE g.id = :id"),
+    @NamedQuery(name = "guest.findByLogin", query = "SELECT g FROM guest g WHERE g.login = :login"),
+    @NamedQuery(name = "guest.findByPassword", query = "SELECT g FROM guest g WHERE g.password = :password"),
+    @NamedQuery(name = "guest.findByLoginAndPassword", query = "SELECT g FROM guest g WHERE g.login = :login and g.password = :password"),
+    @NamedQuery(name = "guest.findByEmail", query = "SELECT g FROM guest g WHERE g.email = :email"),
+    @NamedQuery(name = "guest.findByName", query = "SELECT g FROM guest g WHERE g.name = :name"),
+    @NamedQuery(name = "guest.findByUserType", query = "SELECT g FROM guest g WHERE g.userType = :userType"),
+    @NamedQuery(name = "guest.findBySecretquestion", query = "SELECT g FROM guest g WHERE g.secretquestion = :secretquestion"),
+    @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
+    @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating")})
 public class guest implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,10 +81,12 @@ public class guest implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "secretanswer")
     private String secretanswer;
-    @ManyToMany(mappedBy = "guestCollection")
-    private Collection<ad> adCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "rating")
+    private int rating;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private Collection<ad> adCollection1;
+    private Collection<ad> adCollection;
 
     public guest() {
     }
@@ -107,7 +121,6 @@ public class guest implements Serializable {
         this.secretquestion = secretquestion;
         this.secretanswer = secretanswer;
     }
-    
     
 
     public Integer getId() {
@@ -174,20 +187,21 @@ public class guest implements Serializable {
         this.secretanswer = secretanswer;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @XmlTransient
     public Collection<ad> getAdCollection() {
         return adCollection;
     }
 
     public void setAdCollection(Collection<ad> adCollection) {
         this.adCollection = adCollection;
-    }
-
-    public Collection<ad> getAdCollection1() {
-        return adCollection1;
-    }
-
-    public void setAdCollection1(Collection<ad> adCollection1) {
-        this.adCollection1 = adCollection1;
     }
 
     @Override
@@ -214,5 +228,5 @@ public class guest implements Serializable {
     public String toString() {
         return "witcher.entities.guest[ id=" + id + " ]";
     }
-
+    
 }

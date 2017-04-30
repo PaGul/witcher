@@ -18,20 +18,19 @@ and open the template in the editor.
                 <p:messages id="messages" />
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="header" value="Header" />
-                    <p:inputText id="header" value="#{ad_instance.adInstance.header}" required="true"></p:inputText>
+                    <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true"></p:inputText>
                 </h:panelGrid>
-                <!--<h:panelGrid columns="2" id="password" cellpadding="5">-->                   
+                
                 <p:outputLabel for="text" value="Text " />
-                <p:inputTextarea value=""#{ad_instance.adInstance.text} rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
+                <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" required="true"/>
                 <h:outputText id="display" />
-                <!--</h:panelGrid>-->
 
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="minMax" value="Min/Max: " />
-                    <p:spinner id="minMax" value="#{ad_instance.adInstance.price}" min="0" max="1000" />
+                    <h:outputLabel for="price" value="Price: " />
+                    <p:spinner id="price" value="#{new_ad.adInstance.price}" min="0" max="1000" required="true" />
                 </h:panelGrid>
             </p:panel>
-            <p:commandButton update="panel" action="#{ad_instance.newAd()}"
+            <p:commandButton update="panel" action="#{new_ad.newAd()}"
                              value="Create"></p:commandButton>
 
 

@@ -7,7 +7,6 @@
 package witcher.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,14 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -30,8 +28,13 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "ad")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ad.findAll", query = "SELECT a FROM ad a")})
+    @NamedQuery(name = "ad.findAll", query = "SELECT a FROM ad a"),
+    @NamedQuery(name = "ad.findById", query = "SELECT a FROM ad a WHERE a.id = :id"),
+    @NamedQuery(name = "ad.findByHeader", query = "SELECT a FROM ad a WHERE a.header = :header"),
+    @NamedQuery(name = "ad.findByText", query = "SELECT a FROM ad a WHERE a.text = :text"),
+    @NamedQuery(name = "ad.findByPrice", query = "SELECT a FROM ad a WHERE a.price = :price")})
 public class ad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,11 +56,6 @@ public class ad implements Serializable {
     @NotNull
     @Column(name = "price")
     private int price;
-    @JoinTable(name = "adowners", joinColumns = {
-        @JoinColumn(name = "adid", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "userid", referencedColumnName = "id")})
-    @ManyToMany
-    private Collection<guest> guestCollection;
     @JoinColumn(name = "owner", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private guest owner;
@@ -106,14 +104,6 @@ public class ad implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public Collection<guest> getGuestCollection() {
-        return guestCollection;
-    }
-
-    public void setGuestCollection(Collection<guest> guestCollection) {
-        this.guestCollection = guestCollection;
     }
 
     public guest getOwner() {

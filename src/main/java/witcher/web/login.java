@@ -58,7 +58,7 @@ public class login implements Serializable {
         boolean valid = guestBean.validate(username, pwd);
         if (valid) {
             Integer guestId = guestBean.getIdByLogin(username);
-            guest currGuest = guestBean.getGuestById(guestId.toString());
+            guest currGuest = guestBean.getGuestById(guestId);
             HttpSession session = SessionUtils.getSession();
             session.setAttribute("username", username);
             session.setAttribute("userid", guestId);
