@@ -1,0 +1,17 @@
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/HasUserValidator.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/HasSecretQuestion.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/ejbs/GuestBean.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/entities/ad.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/customer_user.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/witcher_user.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/ad_list.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/signup.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/ad_instance.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/login.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/util/SessionUtils.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/LoginUniqueValidator.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/logout.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/ejbs/AdBean.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/entities/guest.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/guest_instance.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/recoverpassword.java

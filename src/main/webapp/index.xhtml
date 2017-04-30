@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Home</title>
+    </h:head>
+    <h:body>
+
+        <h:form rendered="#{login.loggedSession}">
+            <p:commandButton action="signin"
+                             value="Sign in"></p:commandButton>
+        </h:form>
+        <h:form rendered="#{login.loggedSession}">
+            <p:commandButton action="signup"
+                             value="Sign up"></p:commandButton>
+        </h:form>
+
+
+        <h:outputLink rendered="#{!login.loggedSession}" value="guest.xhtml">
+            <f:param name="gquery" value="#{guest_instance.myId}"/>
+            <h:outputText value="My profile"/>
+        </h:outputLink>
+
+        <br/>
+        <h:form>
+            <h:commandLink rendered="#{!login.loggedSession}" value="logout"  action="#{logout.logout}"/>
+        </h:form>
+        
+        <h:form rendered="#{customer_user.customerLoggedSession}">
+            <p:commandButton action="addNewAd"
+                             value="Add new ad"></p:commandButton>
+        </h:form>
+        
+        <p:dataTable value="#{ad_list.ads}" var="ad_from_list">
+            <p:column>
+                <f:facet name="header">Header</f:facet>
+                <h:outputLink value="ad.xhtml">
+                    <f:param name="adquery" value="#{ad_from_list.id}"/>
+                    <h:outputText value="#{ad_from_list.header}"/>
+                </h:outputLink>
+
+            </p:column>
+            <p:column>
+                <f:facet name="header">Price</f:facet>
+                <h:outputText value="#{ad_from_list.price}"/>
+
+            </p:column>
+            <p:column>
+                <f:facet name="header">Owner</f:facet>
+                <h:outputLink value="guest.xhtml">
+                    <f:param name="gquery" value="#{ad_from_list.owner.id}"/>
+                    <h:outputText value="#{ad_from_list.owner.login}"/>
+                </h:outputLink>
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>
+
