@@ -11,8 +11,10 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpSession;
 import witcher.ejbs.GuestBean;
 import witcher.entities.guest;
+import witcher.util.SessionUtils;
 
 /**
  *
@@ -78,20 +80,12 @@ public class recoverpassword implements Serializable {
     }
     
     public String checkSecretAnswer() {
-        System.out.println(id);
+        HttpSession session = SessionUtils.getSession();
         if (secretAnswer.equals(guestBean.getSecretAnswer(id))) {
+            session.setAttribute("userid", id);
             return "changepassword";
         } else {
             return "wrong_secret_answer";
         }
-    }
-    
-    public String changePassword() {
-        if (guestBean.changePassword(id, password)==1){
-            return "index";
-        } else {
-            return "error";
-        }
-        
     }
 }
