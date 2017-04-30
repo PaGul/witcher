@@ -68,6 +68,10 @@ public class GuestBean {
                 return "Witcher";
             case 2:
                 return "Customer";
+            case 3:
+                return "Herbalist";
+            case 4:
+                return "Blacksmith";
             default:
                 return "Guest";
         }
@@ -115,16 +119,13 @@ public class GuestBean {
         return currUser.getSecretanswer();
     }
 
-    public Integer changePassword(Integer id, String newPassword) {
+    public void changePassword(Integer id, String newPassword) {
         guest currUser = em.find(guest.class, id);
-        Query query = em.createQuery(
-                "UPDATE guest SET password = :password "
-                + "WHERE id=:id");
-        int updateCount = query.setParameter("password", newPassword).setParameter("id", id).executeUpdate();
-        return updateCount;
+        currUser.setPassword(newPassword);
     }
     
-    public guest addMoney(guest User) {
+    public guest update(guest User) {
         return em.merge(User);
     }
+    
 }

@@ -24,27 +24,25 @@
             <h:outputText value="My profile"/>
         </h:outputLink>
 
-        <br/>
-        <h:form>
-            <h:commandLink rendered="#{!login.loggedSession}" value="logout"  action="#{logout.logout}"/>
-        </h:form>
-        
-        <h:form rendered="#{!login.loggedSession}">
+        <h:panelGrid columns="3" cellpadding="5">
+            <h:form rendered="#{!login.loggedSession}">
+                <p:commandButton  value="Log out"  action="#{logout.logout}" onclick="window.location.reload()" ajax="true"/>
+            </h:form>
+
+            <h:form rendered="#{!login.loggedSession}">
                 <p:commandButton action="get_money"
                                  value="Get money"></p:commandButton>
             </h:form>
-        
-        <br/>
-
-        <h:outputLink rendered="#{!login.loggedSession}" value="changepassword.xhtml">
-            <h:outputText value="Change password"/>
-        </h:outputLink>
-
-        <h:form rendered="#{customer_user.customerLoggedSession}">
-            <p:commandButton action="addNewAd"
-                             value="Add new ad"></p:commandButton>
-        </h:form>
-
+            
+            <h:form>
+                <p:commandButton rendered="#{!login.loggedSession}" value="Change password" action="changepassword.xhtml"/>
+            </h:form>
+            
+            <h:form rendered="#{customer_user.customerLoggedSession}">
+                <p:commandButton action="addNewAd"
+                                 value="Add new ad"></p:commandButton>
+            </h:form>
+        </h:panelGrid>
         <h:form>
             <p:dataTable value="#{ad_list.ads}" var="ad_from_list" widgetVar="adTable"
                          paginator="true" rows="10"
@@ -87,7 +85,7 @@
                         <h:outputText value="#{ad_from_list.owner.login}"/>
                     </h:outputLink>
                 </p:column>
-               
+
             </p:dataTable>
         </h:form>
     </h:body>

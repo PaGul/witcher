@@ -56,6 +56,8 @@ public class AdBean {
         em.persist(adInstance);
     }
     
-    
+    public ad update(ad Ad) {
+        return em.merge(Ad);
+    }
     
 }

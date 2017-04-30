@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package witcher.web;
 
 import java.io.Serializable;
@@ -23,16 +22,17 @@ import witcher.util.SessionUtils;
 @ManagedBean
 @SessionScoped
 public class change_password implements Serializable {
-    
+
     @EJB
     private GuestBean guestBean;
     HttpSession session = SessionUtils.getSession();
-    
+
     public change_password() {
     }
     Integer id;
     String password;
     String oldPassword;
+
     public Integer getId() {
         return id;
     }
@@ -56,16 +56,12 @@ public class change_password implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
+
     public String changePassword() {
         id = SessionUtils.getUserId();
         String answer;
-        if (guestBean.changePassword(id, password)==1){
-            answer = "index";
-        } else {
-            answer = "error";
-        }
+        guestBean.changePassword(id, password);
+        answer = "index";
         session.invalidate();
         return answer;
     }

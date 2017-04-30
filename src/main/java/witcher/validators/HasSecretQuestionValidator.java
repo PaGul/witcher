@@ -16,7 +16,7 @@ import witcher.ejbs.GuestBean;
 
 
 @FacesValidator("hasSecretQuestion")
-    public class HasSecretQuestion implements Validator {
+    public class HasSecretQuestionValidator implements Validator {
 
     @EJB
     private GuestBean guestBean;

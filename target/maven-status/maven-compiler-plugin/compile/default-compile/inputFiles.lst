@@ -1,7 +1,6 @@
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/HasUserValidator.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/new_ad.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/change_password.java
-/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/HasSecretQuestion.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/ejbs/GuestBean.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/entities/ad.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/customer_user.java
@@ -9,10 +8,13 @@
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/witcher_user.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/ad_list.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/signup.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/CheckOldPasswordValidator.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/ad_instance.java
-/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/CheckOldPassword.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/EnoughMoneyValidator.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/HasSecretQuestionValidator.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/login.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/util/SessionUtils.java
+/Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/promotion.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/validators/LoginUniqueValidator.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/web/logout.java
 /Users/pavelgulaev/NetBeansProjects/Vedmak/src/main/java/witcher/ejbs/AdBean.java

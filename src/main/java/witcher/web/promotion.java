@@ -9,7 +9,10 @@ package witcher.web;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.HttpSession;
+import witcher.ejbs.AdBean;
 import witcher.ejbs.GuestBean;
+import witcher.entities.ad;
 import witcher.entities.guest;
 import witcher.util.SessionUtils;
 
@@ -19,14 +22,14 @@ import witcher.util.SessionUtils;
  */
 @ManagedBean
 @RequestScoped
-public class get_money extends guest_instance {
+public class promotion {
 
-    public get_money() {
+    public promotion() {
     }
-    
     @EJB
     private GuestBean guestBean;
-    
+    @EJB
+    private AdBean adBean;
     int money;
 
     public int getMoney() {
@@ -37,11 +40,27 @@ public class get_money extends guest_instance {
         this.money = money;
     }
     
-    public String addMoney() {
+    public String saveAdToSession(ad_instance Ad) {
+        HttpSession session = SessionUtils.getSession();
+        System.out.println(Ad.getAd()==null);
+        session.setAttribute("ad", Ad.getAd());
+        return "promotion";
+    }
+    
+    
+    
+    public String promote() {
+        HttpSession session = SessionUtils.getSession();
+        ad currAd = (ad) session.getAttribute("ad");
         guest user = SessionUtils.getUser();
         int balance = user.getBalance();
-        user.setBalance(balance+money);
+        user.setBalance(balance-money);
         guestBean.update(user);
+        int rating = currAd.getRating();
+        currAd.setRating(rating+money);
+        adBean.update(currAd);
+        session.removeAttribute("ad");
         return "index";
     }
+    
 }

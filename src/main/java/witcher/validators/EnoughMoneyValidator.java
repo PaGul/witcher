@@ -16,18 +16,18 @@ import witcher.util.SessionUtils;
  */
 
 
-@FacesValidator("checkOldPassword")
-    public class CheckOldPassword implements Validator {
+@FacesValidator("enoughMoney")
+    public class EnoughMoneyValidator implements Validator {
 
     @EJB
     private GuestBean guestBean;
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        String password = (String) value;
-        String oldPassword = SessionUtils.getUser().getPassword();
-        if (!oldPassword.equals(password)) {
-            throw new ValidatorException(new FacesMessage("You forget your old password"));
+        Integer money = (Integer) value;
+        Integer balance = SessionUtils.getUser().getBalance();
+        if (money>balance) {
+            throw new ValidatorException(new FacesMessage("You haven't enough money. Your balance is "+balance));
         }
     }
 
