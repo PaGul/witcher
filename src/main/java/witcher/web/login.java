@@ -60,9 +60,8 @@ public class login implements Serializable {
             Integer guestId = guestBean.getIdByLogin(username);
             guest currGuest = guestBean.getGuestById(guestId);
             HttpSession session = SessionUtils.getSession();
-            session.setAttribute("username", username);
-            session.setAttribute("userid", guestId);
-            session.setAttribute("userType", currGuest.getUserType());
+            session.setAttribute("user", currGuest);
+            session.setAttribute("userid", currGuest.getId());
             return "index";
         } else {
             FacesContext.getCurrentInstance().addMessage(
@@ -75,7 +74,7 @@ public class login implements Serializable {
     }
     
     public Boolean getLoggedSession() {
-        if (SessionUtils.getUserId()!=null) {
+        if (SessionUtils.getUser()!=null) {
             return false;
         } else {
             return true;

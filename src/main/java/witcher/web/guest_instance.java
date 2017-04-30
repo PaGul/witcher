@@ -45,7 +45,7 @@ public class guest_instance implements Serializable{
     }
     
     public Integer getMyId() {
-        return SessionUtils.getUserId();
+        return SessionUtils.getUser().getId();
     }
 }
 

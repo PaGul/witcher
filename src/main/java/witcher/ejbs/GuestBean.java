@@ -123,4 +123,8 @@ public class GuestBean {
         int updateCount = query.setParameter("password", newPassword).setParameter("id", id).executeUpdate();
         return updateCount;
     }
+    
+    public guest addMoney(guest User) {
+        return em.merge(User);
+    }
 }

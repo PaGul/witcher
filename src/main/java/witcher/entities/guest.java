@@ -44,6 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
     @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating")})
 public class guest implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "balance")
+    private int balance;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -227,6 +231,14 @@ public class guest implements Serializable {
     @Override
     public String toString() {
         return "witcher.entities.guest[ id=" + id + " ]";
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
     
 }

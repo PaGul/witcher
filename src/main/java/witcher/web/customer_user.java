@@ -28,8 +28,7 @@ public class customer_user extends guest_instance {
     private GuestBean guestBean;
     
     public Boolean getCustomerLoggedSession() {
-        Integer userType = SessionUtils.getUserType();
-        if (userType!=null && userType==2) {
+        if (SessionUtils.getUser()!=null && SessionUtils.getUser().getUserType()==2) {
             return true;
         } else {
             return false;

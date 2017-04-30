@@ -28,6 +28,12 @@
         <h:form>
             <h:commandLink rendered="#{!login.loggedSession}" value="logout"  action="#{logout.logout}"/>
         </h:form>
+        
+        <h:form rendered="#{!login.loggedSession}">
+                <p:commandButton action="get_money"
+                                 value="Get money"></p:commandButton>
+            </h:form>
+        
         <br/>
 
         <h:outputLink rendered="#{!login.loggedSession}" value="changepassword.xhtml">

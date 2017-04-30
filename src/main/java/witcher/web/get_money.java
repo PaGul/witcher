@@ -6,14 +6,10 @@
 
 package witcher.web;
 
-import java.io.Serializable;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import witcher.ejbs.AdBean;
 import witcher.ejbs.GuestBean;
-import witcher.entities.ad;
 import witcher.entities.guest;
 import witcher.util.SessionUtils;
 
@@ -23,29 +19,29 @@ import witcher.util.SessionUtils;
  */
 @ManagedBean
 @RequestScoped
-public class new_ad implements Serializable {
-    @EJB
-    private AdBean adBean;
+public class get_money extends guest_instance {
+
+    public get_money() {
+    }
+    
     @EJB
     private GuestBean guestBean;
     
-    public ad adInstance = new ad();
+    int money;
 
-    public ad getAdInstance() {
-        return adInstance;
+    public int getMoney() {
+        return money;
     }
 
-    public void setAdInstance(ad adInstance) {
-        this.adInstance = adInstance;
+    public void setMoney(int money) {
+        this.money = money;
     }
     
-    public String newAd() {
+    public String addMoney() {
         guest user = SessionUtils.getUser();
-        adInstance.setOwner(user);
-        Date date = new Date();
-        adInstance.setDate(date);
-        adBean.newAd(adInstance);
+        int balance = user.getBalance();
+        user.setBalance(balance+money);
+        guestBean.addMoney(user);
         return "index";
     }
-    
 }

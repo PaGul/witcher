@@ -3,6 +3,7 @@ package witcher.util;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import witcher.entities.guest;
 
 public class SessionUtils {
 
@@ -16,12 +17,6 @@ public class SessionUtils {
 				.getExternalContext().getRequest();
 	}
 
-	public static String getUserName() {
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		return (String) session.getAttribute("username");
-	}
-
 	public static Integer getUserId() {
 		HttpSession session = getSession();
 		if (session != null)
@@ -30,10 +25,12 @@ public class SessionUtils {
 			return null;
 	}
         
-        public static Integer getUserType() {
+        
+        
+        public static guest getUser() {
 		HttpSession session = getSession();
 		if (session != null)
-			return (Integer) session.getAttribute("userType");
+			return (guest) session.getAttribute("user");
 		else
 			return null;
 	}
