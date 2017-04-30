@@ -8,16 +8,16 @@
         <title>Home</title>
     </h:head>
     <h:body>
-
-        <h:form rendered="#{login.loggedSession}">
-            <p:commandButton action="signin"
-                             value="Sign in"></p:commandButton>
-        </h:form>
-        <h:form rendered="#{login.loggedSession}">
-            <p:commandButton action="signup"
-                             value="Sign up"></p:commandButton>
-        </h:form>
-
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:form rendered="#{login.loggedSession}">
+                <p:commandButton action="signin"
+                                 value="Sign in"></p:commandButton>
+            </h:form>
+            <h:form rendered="#{login.loggedSession}">
+                <p:commandButton action="signup"
+                                 value="Sign up"></p:commandButton>
+            </h:form>
+        </h:panelGrid>
 
         <h:outputLink rendered="#{!login.loggedSession}" value="guest.xhtml">
             <f:param name="gquery" value="#{guest_instance.myId}"/>
@@ -29,42 +29,61 @@
             <h:commandLink rendered="#{!login.loggedSession}" value="logout"  action="#{logout.logout}"/>
         </h:form>
         <br/>
-        
+
         <h:outputLink rendered="#{!login.loggedSession}" value="changepassword.xhtml">
             <h:outputText value="Change password"/>
         </h:outputLink>
-        
+
         <h:form rendered="#{customer_user.customerLoggedSession}">
             <p:commandButton action="addNewAd"
                              value="Add new ad"></p:commandButton>
         </h:form>
-        
-        <p:dataTable value="#{ad_list.ads}" var="ad_from_list">
-            <p:column>
-                <f:facet name="header">Header</f:facet>
-                <h:outputLink value="ad.xhtml">
-                    <f:param name="adquery" value="#{ad_from_list.id}"/>
-                    <h:outputText value="#{ad_from_list.header}"/>
-                </h:outputLink>
 
-            </p:column>
-            <p:column>
-                <f:facet name="header">Price</f:facet>
-                <h:outputText value="#{ad_from_list.price}"/>
+        <h:form>
+            <p:dataTable value="#{ad_list.ads}" var="ad_from_list" widgetVar="adTable"
+                         paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15,25,100" stickyHeader="true"
+                         emptyMessage="No ads found with given criteria"
+                         filteredValue="#{ad_list.filteredAds}"
+                         sortBy="#{ad_from_list.rating}" sortOrder="DESCENDING">
 
-            </p:column>
-            <p:column>
-                <f:facet name="header">Date</f:facet>
-                <h:outputText value="#{ad_from_list.date}"/>
-            </p:column>
-            <p:column>
-                <f:facet name="header">Owner</f:facet>
-                <h:outputLink value="guest.xhtml">
-                    <f:param name="gquery" value="#{ad_from_list.owner.id}"/>
-                    <h:outputText value="#{ad_from_list.owner.login}"/>
-                </h:outputLink>
-            </p:column>
-        </p:dataTable>
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('adTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column filterBy="#{ad_from_list.header}" sortBy="#{ad_from_list.date}" 
+                          filterStyle="display:none" headerText="Header">
+                    <h:outputLink value="ad.xhtml">
+                        <f:param name="adquery" value="#{ad_from_list.id}"/>
+                        <h:outputText value="#{ad_from_list.header}"/>
+                    </h:outputLink>
+
+                </p:column>
+
+                <p:column filterBy="#{ad_from_list.price}" sortBy="#{ad_from_list.price}" 
+                          filterStyle="display:none" headerText="Price">
+                    <h:outputText value="#{ad_from_list.price}"/>
+
+                </p:column>
+
+                <p:column filterBy="#{ad_from_list.date}" sortBy="#{ad_from_list.date}" 
+                          filterStyle="display:none" headerText="Date">
+                    <h:outputText value="#{ad_from_list.date}"/>
+                </p:column>
+                <p:column filterBy="#{ad_from_list.owner.login}" sortBy="#{ad_from_list.rating}" 
+                          filterStyle="display:none" headerText="Owner (sort by rating)">
+                    <h:outputLink value="guest.xhtml">
+                        <f:param name="gquery" value="#{ad_from_list.owner.id}"/>
+                        <h:outputText value="#{ad_from_list.owner.login}"/>
+                    </h:outputLink>
+                </p:column>
+               
+            </p:dataTable>
+        </h:form>
     </h:body>
 </html>
 

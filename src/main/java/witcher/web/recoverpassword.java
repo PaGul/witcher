@@ -8,12 +8,10 @@ package witcher.web;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 import witcher.ejbs.GuestBean;
-import witcher.entities.guest;
 import witcher.util.SessionUtils;
 
 /**

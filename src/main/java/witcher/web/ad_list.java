@@ -8,6 +8,7 @@ package witcher.web;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -24,15 +25,34 @@ public class ad_list implements Serializable {
     
     @EJB
     private AdBean adBean;
+    private List<ad> ads;
+    private List<ad> filteredAds;
 
     /**
      * Creates a new instance of ad_list
      */
     public ad_list() {
     }
+    @PostConstruct
+    public void init() {
+        ads = adBean.getAds();
+    }
     
     public List<ad> getAds() {
-        return adBean.getAds();
+        return ads;
     }
+
+    public void setAds(List<ad> ads) {
+        this.ads = ads;
+    }
+
+    public List<ad> getFilteredAds() {
+        return filteredAds;
+    }
+
+    public void setFilteredAds(List<ad> filteredAds) {
+        this.filteredAds = filteredAds;
+    }
+    
     
 }

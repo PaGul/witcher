@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import witcher.entities.ad;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-04-30T20:04:36")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-04-30T23:37:51")
 @StaticMetamodel(guest.class)
 public class guest_ { 
 
