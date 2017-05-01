@@ -40,7 +40,6 @@ public class customer_user extends guest_instance {
     }
 
     public Boolean checkThisAd(ad_instance adInst) {
-        System.out.println(adInst.getAd().getId());
         if (!getCustomerLoggedSession()) {
             return false;
         }

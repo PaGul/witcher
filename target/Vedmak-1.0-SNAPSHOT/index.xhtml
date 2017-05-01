@@ -8,7 +8,7 @@
         <title>Home</title>
     </h:head>
     <h:body>
-        <h:panelGrid columns="2" cellpadding="5">
+        <h:panelGrid columns="2" cellpadding="5" id="unregistered">
             <h:form rendered="#{login.loggedSession}">
                 <p:commandButton action="signin"
                                  value="Sign in"></p:commandButton>
@@ -19,25 +19,26 @@
             </h:form>
         </h:panelGrid>
 
-        <h:outputLink rendered="#{!login.loggedSession}" value="guest.xhtml">
-            <f:param name="gquery" value="#{guest_instance.myId}"/>
-            <h:outputText value="My profile"/>
-        </h:outputLink>
 
-        <h:panelGrid columns="3" cellpadding="5">
+
+        <h:panelGrid columns="4" cellpadding="5" id="registered">
+            <h:outputLink rendered="#{!login.loggedSession}" value="guest.xhtml">
+                <f:param name="gquery" value="#{guest_instance.myId}"/>
+                <h:outputText value="My profile"/>
+            </h:outputLink>
             <h:form rendered="#{!login.loggedSession}">
-                <p:commandButton  value="Log out"  action="#{logout.logout}" onclick="window.location.reload()" ajax="true"/>
+                <p:commandButton  value="Log out"  action="#{logout.logout}" update="registered unregistered" ajax="true"/>
             </h:form>
 
             <h:form rendered="#{!login.loggedSession}">
                 <p:commandButton action="get_money"
                                  value="Get money"></p:commandButton>
             </h:form>
-            
+
             <h:form>
                 <p:commandButton rendered="#{!login.loggedSession}" value="Change password" action="changepassword.xhtml"/>
             </h:form>
-            
+
             <h:form rendered="#{customer_user.customerLoggedSession}">
                 <p:commandButton action="addNewAd"
                                  value="Add new ad"></p:commandButton>

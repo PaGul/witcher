@@ -44,6 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
     @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating")})
 public class guest implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest")
+    private Collection<witcherorders> witcherordersCollection;
     @Basic(optional = false)
     @NotNull
     @Column(name = "balance")
@@ -239,6 +241,15 @@ public class guest implements Serializable {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    @XmlTransient
+    public Collection<witcherorders> getWitcherordersCollection() {
+        return witcherordersCollection;
+    }
+
+    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
+        this.witcherordersCollection = witcherordersCollection;
     }
     
 }
