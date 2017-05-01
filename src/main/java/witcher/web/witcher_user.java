@@ -5,17 +5,21 @@
  */
 package witcher.web;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
-import witcher.ejbs.AdBean;
-import witcher.ejbs.GuestBean;
+import org.primefaces.model.UploadedFile;
 import witcher.ejbs.WitcherBean;
-import witcher.entities.ad;
-import witcher.entities.guest;
-import witcher.entities.witcherorders;
 import witcher.entities.witcherordersPK;
 import witcher.util.SessionUtils;
 
@@ -55,38 +59,66 @@ public class witcher_user extends guest_instance {
 
     public Boolean checkThisAdWitcherDontTake() {
         witcherordersPK potentialOrder = getPotentialOrder();
-        if (witcherBean.checkWitcherHasThisOrder(potentialOrder)) {
-            return false;
+        if (!witcherBean.checkWitcherHasThisOrder(potentialOrder)) {
+            return true;
         }
-        HttpSession session = SessionUtils.getSession();
-        session.setAttribute("adId", potentialOrder.getAdId());
-        return true;
-
+        return false;
     }
     
-      public Boolean checkThisAdWitcherTake() {
+    public Boolean checkThisAdWitcherTake() {
         witcherordersPK potentialOrder = getPotentialOrder();
-        if (!witcherBean.checkWitcherHasThisOrder(potentialOrder)) {
-            return false;
+        if (witcherBean.checkWitcherHasThisOrder(potentialOrder) && !witcherBean.checkWitcherProveTheOrder(potentialOrder)) {
+            return true;
         }
-        HttpSession session = SessionUtils.getSession();
-        session.setAttribute("adId", potentialOrder.getAdId());
-        return true;
+        return false;
+    }
+
+    public Boolean checkThisAdWitcherProve() {
+        witcherordersPK potentialOrder = getPotentialOrder();
+        if (witcherBean.checkWitcherProveTheOrder(potentialOrder)) {
+            return true;
+        }
+        return false;
     }
 
     public void takeOrder() {
-        HttpSession session = SessionUtils.getSession();
-        Integer adId = (Integer) session.getAttribute("adId");
-        witcherorders WitcherOrder = new witcherorders(getMyId(), adId);
+        witcherordersPK WitcherOrder = getPotentialOrder();
         witcherBean.addWitcherOrder(WitcherOrder);
-        session.removeAttribute("ad");
     }
 
     public void cancelOrder() {
-        HttpSession session = SessionUtils.getSession();
-        Integer adId = (Integer) session.getAttribute("adId");
-        witcherordersPK WitcherOrder = new witcherordersPK(getMyId(), adId);
+        witcherordersPK WitcherOrder = getPotentialOrder();
         witcherBean.deleteWitcherOrder(WitcherOrder);
-        session.removeAttribute("ad");
+    }
+
+    private UploadedFile file;
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public void upload() throws IOException {
+        if (file != null) {
+            FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            witcherordersPK WitcherOrder = getPotentialOrder();
+            InputStream is = file.getInputstream();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+            int nRead;
+            byte[] data = new byte[16384];
+
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+
+            buffer.flush();
+
+            witcherBean.proveOrder(WitcherOrder, buffer.toByteArray());
+        }
     }
 }

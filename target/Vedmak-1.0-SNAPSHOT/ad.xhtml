@@ -13,14 +13,31 @@
             <p:commandButton action="promotion" value="Promote your ad"/>
         </h:form>
         <h:panelGrid rendered="#{witcher_user.witcherLoggedSession}" columns="2" cellpadding="5" id="witcherPanel">
+            
+            
             <h:form rendered="#{witcher_user.checkThisAdWitcherDontTake()}" >
                 <input type="hidden" name="adquery" value="#{ad_instance.query}"/>
-                <p:commandButton id="takeOrder" action="#{witcher_user.takeOrder()}" value="Take this order" update="witcherPanel" ajax="true" />
+                <p:commandButton id="takeOrder" action="#{witcher_user.takeOrder()}" 
+                                 value="Take this order" update="witcherPanel" ajax="true" />
             </h:form>
+            
+            
+            <h:form enctype="multipart/form-data" rendered="#{witcher_user.checkThisAdWitcherTake()}">
+                <p:growl id="messages" showDetail="true" />
+
+                <p:fileUpload value="#{witcher_user.file}" mode="simple" skinSimple="true"/>
+                <input type="hidden" name="adquery" value="#{ad_instance.query}"/>
+                <p:commandButton value="Submit" ajax="false" actionListener="#{witcher_user.upload}"  update="witcherPanel"/>
+            </h:form>
+            
+            
             <h:form rendered="#{witcher_user.checkThisAdWitcherTake()}" >
                 <input type="hidden" name="adquery" value="#{ad_instance.query}"/>
                 <p:commandButton id="cancelOrder" action="#{witcher_user.cancelOrder()}" value="Cancel order" update="witcherPanel" ajax="true" />
             </h:form>
+            
+            <h:outputText rendered="#{witcher_user.checkThisAdWitcherProve()}" 
+                          value="You prove that order"/>
         </h:panelGrid>
         #{ad_instance.checkIfQueryExists()}
         Header: #{ad_instance.ad.header} <br/>

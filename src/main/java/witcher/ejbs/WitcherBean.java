@@ -29,8 +29,8 @@ public class WitcherBean extends GuestBean {
         return em;
     }
 
-    public void addWitcherOrder(witcherorders WitcherOrder) {
-        em.persist(WitcherOrder);
+    public void addWitcherOrder(witcherordersPK WitcherOrderPK) {
+        em.persist(new witcherorders(WitcherOrderPK));
     }
     
     public Boolean checkWitcherHasThisOrder(witcherordersPK WitcherOrder) {
@@ -38,8 +38,19 @@ public class WitcherBean extends GuestBean {
         return Order!=null;
     }
     
+    public Boolean checkWitcherProveTheOrder(witcherordersPK WitcherOrder) {
+        witcherorders Order = em.find(witcherorders.class, WitcherOrder);
+        return (Order!=null && Order.getProof()!=null && Order.getProof().length>0);
+    }
+    
     public void deleteWitcherOrder(witcherordersPK WitcherOrderPK) {
         witcherorders WitcherOrder = em.find(witcherorders.class, WitcherOrderPK);
         em.remove(WitcherOrder);
+    }
+    
+    public void proveOrder(witcherordersPK WitcherOrderPK, byte[] file) {
+        witcherorders WitcherOrder = em.find(witcherorders.class, WitcherOrderPK);
+        WitcherOrder.setProof(file);
+        em.merge(WitcherOrder);
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -32,6 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "witcherorders.findByAdId", query = "SELECT w FROM witcherorders w WHERE w.witcherordersPK.adId = :adId"),
     @NamedQuery(name = "witcherorders.findByNotificated", query = "SELECT w FROM witcherorders w WHERE w.notificated = :notificated")})
 public class witcherorders implements Serializable {
+    @Lob
+    @Column(name = "proof")
+    private byte[] proof;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected witcherordersPK witcherordersPK;
@@ -117,6 +121,14 @@ public class witcherorders implements Serializable {
     @Override
     public String toString() {
         return "witcher.entities.witcherorders[ witcherordersPK=" + witcherordersPK + " ]";
+    }
+
+    public byte[] getProof() {
+        return proof;
+    }
+
+    public void setProof(byte[] proof) {
+        this.proof = proof;
     }
     
 }
