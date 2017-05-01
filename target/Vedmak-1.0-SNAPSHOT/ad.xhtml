@@ -12,10 +12,14 @@
         <h:form rendered="#{customer_user.checkThisAd(ad_instance)}">
             <p:commandButton action="promotion" value="Promote your ad"/>
         </h:form>
-        <h:panelGrid columns="2" cellpadding="5" id="witcherPanel">
+        <h:panelGrid rendered="#{witcher_user.witcherLoggedSession}" columns="2" cellpadding="5" id="witcherPanel">
             <h:form rendered="#{witcher_user.checkThisAdWitcherDontTake()}" >
                 <input type="hidden" name="adquery" value="#{ad_instance.query}"/>
                 <p:commandButton id="takeOrder" action="#{witcher_user.takeOrder()}" value="Take this order" update="witcherPanel" ajax="true" />
+            </h:form>
+            <h:form rendered="#{witcher_user.checkThisAdWitcherTake()}" >
+                <input type="hidden" name="adquery" value="#{ad_instance.query}"/>
+                <p:commandButton id="cancelOrder" action="#{witcher_user.cancelOrder()}" value="Cancel order" update="witcherPanel" ajax="true" />
             </h:form>
         </h:panelGrid>
         #{ad_instance.checkIfQueryExists()}

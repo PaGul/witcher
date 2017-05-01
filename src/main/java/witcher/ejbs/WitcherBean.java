@@ -30,13 +30,16 @@ public class WitcherBean extends GuestBean {
     }
 
     public void addWitcherOrder(witcherorders WitcherOrder) {
-        System.out.println("here we go");
         em.persist(WitcherOrder);
     }
     
     public Boolean checkWitcherHasThisOrder(witcherordersPK WitcherOrder) {
         witcherorders Order = em.find(witcherorders.class, WitcherOrder);
-        System.out.println(Order==null);
         return Order!=null;
+    }
+    
+    public void deleteWitcherOrder(witcherordersPK WitcherOrderPK) {
+        witcherorders WitcherOrder = em.find(witcherorders.class, WitcherOrderPK);
+        em.remove(WitcherOrder);
     }
 }

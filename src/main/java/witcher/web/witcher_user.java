@@ -54,9 +54,6 @@ public class witcher_user extends guest_instance {
     }
 
     public Boolean checkThisAdWitcherDontTake() {
-        if (!getWitcherLoggedSession()) {
-            return false;
-        }
         witcherordersPK potentialOrder = getPotentialOrder();
         if (witcherBean.checkWitcherHasThisOrder(potentialOrder)) {
             return false;
@@ -65,6 +62,16 @@ public class witcher_user extends guest_instance {
         session.setAttribute("adId", potentialOrder.getAdId());
         return true;
 
+    }
+    
+      public Boolean checkThisAdWitcherTake() {
+        witcherordersPK potentialOrder = getPotentialOrder();
+        if (!witcherBean.checkWitcherHasThisOrder(potentialOrder)) {
+            return false;
+        }
+        HttpSession session = SessionUtils.getSession();
+        session.setAttribute("adId", potentialOrder.getAdId());
+        return true;
     }
 
     public void takeOrder() {
@@ -75,4 +82,11 @@ public class witcher_user extends guest_instance {
         session.removeAttribute("ad");
     }
 
+    public void cancelOrder() {
+        HttpSession session = SessionUtils.getSession();
+        Integer adId = (Integer) session.getAttribute("adId");
+        witcherordersPK WitcherOrder = new witcherordersPK(getMyId(), adId);
+        witcherBean.deleteWitcherOrder(WitcherOrder);
+        session.removeAttribute("ad");
+    }
 }
