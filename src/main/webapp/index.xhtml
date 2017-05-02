@@ -19,8 +19,6 @@
             </h:form>
         </h:panelGrid>
 
-
-
         <h:panelGrid columns="4" cellpadding="5" id="registered">
             <h:outputLink rendered="#{!login.loggedSession}" value="guest.xhtml">
                 <f:param name="gquery" value="#{guest_instance.myId}"/>
@@ -31,7 +29,7 @@
             </h:form>
 
             <h:form rendered="#{!login.loggedSession}">
-                <p:commandButton action="get_money"
+                <p:commandButton action="get_money.xhtml"
                                  value="Get money"></p:commandButton>
             </h:form>
 
@@ -42,6 +40,10 @@
             <h:form rendered="#{customer_user.customerLoggedSession}">
                 <p:commandButton action="addNewAd"
                                  value="Add new ad"></p:commandButton>
+            </h:form>
+            
+            <h:form>
+                <p:commandButton rendered="#{customer_user.checkNotifications()}" value="Get new notifications"  action="notifications" update="registered unregistered" ajax="true"/>
             </h:form>
         </h:panelGrid>
         <h:form>

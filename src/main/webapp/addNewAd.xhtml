@@ -20,7 +20,7 @@ and open the template in the editor.
                     <p:outputLabel for="header" value="Header" />
                     <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true"></p:inputText>
                 </h:panelGrid>
-                
+
                 <p:outputLabel for="text" value="Text " />
                 <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" required="true"/>
                 <h:outputText id="display" />
@@ -34,7 +34,12 @@ and open the template in the editor.
                              value="Create"></p:commandButton>
 
 
-        </h:form>
 
+        </h:form>
+        <br/>
+        <h:form>
+            <p:commandButton action="index" 
+                             value="Cancel"></p:commandButton>
+        </h:form>
     </h:body>
 </html>

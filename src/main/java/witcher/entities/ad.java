@@ -45,14 +45,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ad.findByRating", query = "SELECT a FROM ad a WHERE a.rating = :rating"),
     @NamedQuery(name = "ad.findByDate", query = "SELECT a FROM ad a WHERE a.date = :date")})
 public class ad implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
-    private Collection<witcherorders> witcherordersCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -79,15 +77,17 @@ public class ad implements Serializable {
     @JoinColumn(name = "owner", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private guest owner;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "adId")
+    private Collection<witcherorders> witcherordersCollection;
 
     public ad() {
     }
 
-    public ad(Long id) {
+    public ad(Integer id) {
         this.id = id;
     }
 
-    public ad(Long id, String header, String text, int price, int rating, Date date) {
+    public ad(Integer id, String header, String text, int price, int rating, Date date) {
         this.id = id;
         this.header = header;
         this.text = text;
@@ -96,11 +96,11 @@ public class ad implements Serializable {
         this.date = date;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -152,6 +152,15 @@ public class ad implements Serializable {
         this.owner = owner;
     }
 
+    @XmlTransient
+    public Collection<witcherorders> getWitcherordersCollection() {
+        return witcherordersCollection;
+    }
+
+    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
+        this.witcherordersCollection = witcherordersCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -175,15 +184,6 @@ public class ad implements Serializable {
     @Override
     public String toString() {
         return "witcher.entities.ad[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<witcherorders> getWitcherordersCollection() {
-        return witcherordersCollection;
-    }
-
-    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
-        this.witcherordersCollection = witcherordersCollection;
     }
     
 }

@@ -5,14 +5,17 @@
  */
 package witcher.web;
 
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.http.HttpSession;
 import witcher.ejbs.AdBean;
 import witcher.ejbs.GuestBean;
+import witcher.ejbs.NotificationBean;
 import witcher.entities.ad;
 import witcher.entities.guest;
+import witcher.entities.witcherorders;
 import witcher.util.SessionUtils;
 
 /**
@@ -26,10 +29,8 @@ public class customer_user extends guest_instance {
     public customer_user() {
     }
 
-    @EJB
-    private GuestBean guestBean;
-    @EJB
-    private AdBean adBean;
+    @EJB 
+    private NotificationBean notificationBean;
 
     public Boolean getCustomerLoggedSession() {
         if (SessionUtils.getUser() != null && SessionUtils.getUser().getUserType() == 2) {
@@ -50,5 +51,11 @@ public class customer_user extends guest_instance {
         } else {
             return false;
         }
+    }
+    
+    public Boolean checkNotifications() {
+        if (!getCustomerLoggedSession()) return false;
+        guest customer = SessionUtils.getUser();
+        return notificationBean.hasNewOrders(customer);
     }
 }

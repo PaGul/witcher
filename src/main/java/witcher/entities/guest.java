@@ -42,14 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findByUserType", query = "SELECT g FROM guest g WHERE g.userType = :userType"),
     @NamedQuery(name = "guest.findBySecretquestion", query = "SELECT g FROM guest g WHERE g.secretquestion = :secretquestion"),
     @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
-    @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating")})
+    @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating"),
+    @NamedQuery(name = "guest.findByBalance", query = "SELECT g FROM guest g WHERE g.balance = :balance")})
 public class guest implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest")
-    private Collection<witcherorders> witcherordersCollection;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "balance")
-    private int balance;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,8 +86,14 @@ public class guest implements Serializable {
     @NotNull
     @Column(name = "rating")
     private int rating;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "balance")
+    private int balance;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Collection<ad> adCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "witcherId")
+    private Collection<witcherorders> witcherordersCollection;
 
     public guest() {
     }
@@ -101,33 +102,16 @@ public class guest implements Serializable {
         this.id = id;
     }
 
-    public guest(String login, String password, String email, String name, int userType) {
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.userType = userType;
-    }
-
-    public guest(Integer id, String login, String password, String email, String name, int userType) {
+    public guest(Integer id, String login, String password, String email, String name, int userType, int rating, int balance) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.name = name;
         this.userType = userType;
+        this.rating = rating;
+        this.balance = balance;
     }
-
-    public guest(String login, String password, String email, String name, int userType, String secretquestion, String secretanswer) {
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.name = name;
-        this.userType = userType;
-        this.secretquestion = secretquestion;
-        this.secretanswer = secretanswer;
-    }
-    
 
     public Integer getId() {
         return id;
@@ -201,6 +185,14 @@ public class guest implements Serializable {
         this.rating = rating;
     }
 
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
     @XmlTransient
     public Collection<ad> getAdCollection() {
         return adCollection;
@@ -208,6 +200,15 @@ public class guest implements Serializable {
 
     public void setAdCollection(Collection<ad> adCollection) {
         this.adCollection = adCollection;
+    }
+
+    @XmlTransient
+    public Collection<witcherorders> getWitcherordersCollection() {
+        return witcherordersCollection;
+    }
+
+    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
+        this.witcherordersCollection = witcherordersCollection;
     }
 
     @Override
@@ -233,23 +234,6 @@ public class guest implements Serializable {
     @Override
     public String toString() {
         return "witcher.entities.guest[ id=" + id + " ]";
-    }
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
-    @XmlTransient
-    public Collection<witcherorders> getWitcherordersCollection() {
-        return witcherordersCollection;
-    }
-
-    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
-        this.witcherordersCollection = witcherordersCollection;
     }
     
 }

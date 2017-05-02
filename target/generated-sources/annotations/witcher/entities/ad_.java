@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import witcher.entities.guest;
 import witcher.entities.witcherorders;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-05-01T19:11:07")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-05-02T02:24:43")
 @StaticMetamodel(ad.class)
 public class ad_ { 
 
@@ -18,7 +18,7 @@ public class ad_ {
     public static volatile CollectionAttribute<ad, witcherorders> witcherordersCollection;
     public static volatile SingularAttribute<ad, Integer> rating;
     public static volatile SingularAttribute<ad, String> header;
-    public static volatile SingularAttribute<ad, Long> id;
+    public static volatile SingularAttribute<ad, Integer> id;
     public static volatile SingularAttribute<ad, String> text;
 
 }

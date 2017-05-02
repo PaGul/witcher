@@ -9,8 +9,10 @@ package witcher.entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -29,51 +31,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "witcherorders.findAll", query = "SELECT w FROM witcherorders w"),
-    @NamedQuery(name = "witcherorders.findByWitcherId", query = "SELECT w FROM witcherorders w WHERE w.witcherordersPK.witcherId = :witcherId"),
-    @NamedQuery(name = "witcherorders.findByAdId", query = "SELECT w FROM witcherorders w WHERE w.witcherordersPK.adId = :adId"),
-    @NamedQuery(name = "witcherorders.findByNotificated", query = "SELECT w FROM witcherorders w WHERE w.notificated = :notificated")})
+    @NamedQuery(name = "witcherorders.findByNotificated", query = "SELECT w FROM witcherorders w WHERE w.notificated = :notificated"),
+    @NamedQuery(name = "witcherorders.findById", query = "SELECT w FROM witcherorders w WHERE w.id = :id"),
+    @NamedQuery(name = "witcherorders.findByWitcherAndAd", query = "SELECT w FROM witcherorders w WHERE w.witcherId = :wid AND w.adId=:aid")})
+
 public class witcherorders implements Serializable {
-    @Lob
-    @Column(name = "proof")
-    private byte[] proof;
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected witcherordersPK witcherordersPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "notificated")
     private int notificated;
-    @JoinColumn(name = "ad_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Lob
+    @Column(name = "proof")
+    private byte[] proof;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Long id;
+    @JoinColumn(name = "ad_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private ad ad;
-    @JoinColumn(name = "witcher_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private ad adId;
+    @JoinColumn(name = "witcher_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private guest guest;
+    private guest witcherId;
 
     public witcherorders() {
     }
 
-    public witcherorders(witcherordersPK witcherordersPK) {
-        this.witcherordersPK = witcherordersPK;
+    public witcherorders(Long id) {
+        this.id = id;
     }
 
-    public witcherorders(witcherordersPK witcherordersPK, int notificated) {
-        this.witcherordersPK = witcherordersPK;
+    public witcherorders(Long id, int notificated) {
+        this.id = id;
         this.notificated = notificated;
     }
 
-    public witcherorders(int witcherId, int adId) {
-        this.witcherordersPK = new witcherordersPK(witcherId, adId);
+    public witcherorders(guest witcherId, ad adId) {
+        this.adId = adId;
+        this.witcherId = witcherId;
     }
 
-    public witcherordersPK getWitcherordersPK() {
-        return witcherordersPK;
-    }
-
-    public void setWitcherordersPK(witcherordersPK witcherordersPK) {
-        this.witcherordersPK = witcherordersPK;
-    }
-
+    
     public int getNotificated() {
         return notificated;
     }
@@ -82,26 +82,42 @@ public class witcherorders implements Serializable {
         this.notificated = notificated;
     }
 
-    public ad getAd() {
-        return ad;
+    public byte[] getProof() {
+        return proof;
     }
 
-    public void setAd(ad ad) {
-        this.ad = ad;
+    public void setProof(byte[] proof) {
+        this.proof = proof;
     }
 
-    public guest getGuest() {
-        return guest;
+    public Long getId() {
+        return id;
     }
 
-    public void setGuest(guest guest) {
-        this.guest = guest;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ad getAdId() {
+        return adId;
+    }
+
+    public void setAdId(ad adId) {
+        this.adId = adId;
+    }
+
+    public guest getWitcherId() {
+        return witcherId;
+    }
+
+    public void setWitcherId(guest witcherId) {
+        this.witcherId = witcherId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (witcherordersPK != null ? witcherordersPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -112,7 +128,7 @@ public class witcherorders implements Serializable {
             return false;
         }
         witcherorders other = (witcherorders) object;
-        if ((this.witcherordersPK == null && other.witcherordersPK != null) || (this.witcherordersPK != null && !this.witcherordersPK.equals(other.witcherordersPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -120,15 +136,12 @@ public class witcherorders implements Serializable {
 
     @Override
     public String toString() {
-        return "witcher.entities.witcherorders[ witcherordersPK=" + witcherordersPK + " ]";
+        return "witcher.entities.witcherorders[ id=" + id + " ]";
     }
-
-    public byte[] getProof() {
-        return proof;
-    }
-
-    public void setProof(byte[] proof) {
-        this.proof = proof;
+    
+    public Boolean getProofed() {
+        return getProof()!=null;
+                
     }
     
 }

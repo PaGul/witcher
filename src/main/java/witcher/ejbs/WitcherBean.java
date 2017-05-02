@@ -13,7 +13,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import witcher.entities.guest;
 import witcher.entities.witcherorders;
-import witcher.entities.witcherordersPK;
 
 /**
  *
@@ -29,28 +28,43 @@ public class WitcherBean extends GuestBean {
         return em;
     }
 
-    public void addWitcherOrder(witcherordersPK WitcherOrderPK) {
-        em.persist(new witcherorders(WitcherOrderPK));
+    public void addWitcherOrder(witcherorders WitcherOrder) {
+        em.persist(WitcherOrder);
     }
     
-    public Boolean checkWitcherHasThisOrder(witcherordersPK WitcherOrder) {
-        witcherorders Order = em.find(witcherorders.class, WitcherOrder);
-        return Order!=null;
+    public Boolean checkWitcherHasThisOrder(witcherorders WitcherOrder) {
+        TypedQuery<witcherorders> Query = em.createNamedQuery("witcherorders.findByWitcherAndAd", witcherorders.class);
+        Query.setParameter("wid", WitcherOrder.getWitcherId());
+        Query.setParameter("aid", WitcherOrder.getAdId());
+        List<witcherorders> Order = Query.getResultList();
+        
+        return !Order.isEmpty();
     }
     
-    public Boolean checkWitcherProveTheOrder(witcherordersPK WitcherOrder) {
-        witcherorders Order = em.find(witcherorders.class, WitcherOrder);
-        return (Order!=null && Order.getProof()!=null && Order.getProof().length>0);
+    public Boolean checkWitcherProveTheOrder(witcherorders WitcherOrder) {
+        TypedQuery<witcherorders> Query = em.createNamedQuery("witcherorders.findByWitcherAndAd", witcherorders.class);
+        Query.setParameter("wid", WitcherOrder.getWitcherId());
+        Query.setParameter("aid", WitcherOrder.getAdId());
+        List<witcherorders> Order = Query.getResultList();
+        return (!Order.isEmpty() && Order.get(0).getProof()!=null && Order.get(0).getProof().length>0);
     }
     
-    public void deleteWitcherOrder(witcherordersPK WitcherOrderPK) {
-        witcherorders WitcherOrder = em.find(witcherorders.class, WitcherOrderPK);
-        em.remove(WitcherOrder);
+    public void deleteWitcherOrder(witcherorders WitcherOrder) {
+        TypedQuery<witcherorders> Query = em.createNamedQuery("witcherorders.findByWitcherAndAd", witcherorders.class);
+        Query.setParameter("wid", WitcherOrder.getWitcherId());
+        Query.setParameter("aid", WitcherOrder.getAdId());
+        List<witcherorders> Order = Query.getResultList();
+        em.remove(Order.get(0));
     }
     
-    public void proveOrder(witcherordersPK WitcherOrderPK, byte[] file) {
-        witcherorders WitcherOrder = em.find(witcherorders.class, WitcherOrderPK);
-        WitcherOrder.setProof(file);
-        em.merge(WitcherOrder);
+    public void proveOrder(witcherorders WitcherOrder, byte[] file) {
+        TypedQuery<witcherorders> Query = em.createNamedQuery("witcherorders.findByWitcherAndAd", witcherorders.class);
+        Query.setParameter("wid", WitcherOrder.getWitcherId());
+        Query.setParameter("aid", WitcherOrder.getAdId());
+        List<witcherorders> OrderList = Query.getResultList();
+        witcherorders Order = OrderList.get(0);
+        Order.setProof(file);
+        Order.setNotificated(0);
+        em.merge(Order);
     }
 }

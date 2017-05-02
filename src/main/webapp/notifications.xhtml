@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Notifications</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:dataTable value="#{notifications.notificatedOrders}" var="note_from_list" widgetVar="noteTable"
+                         paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15,25,100" stickyHeader="true">
+                <p:column headerText="Ad Header">
+                    <h:outputLink value="ad.xhtml">
+                        <f:param name="adquery" value="#{note_from_list.adId.id}"/>
+                        <h:outputText value="#{note_from_list.adId.header}"/>
+                    </h:outputLink>
+                </p:column>
+
+                <p:column headerText="Status">
+                    <h:outputText rendered="#{!note_from_list.proofed}" value="Taken"/>
+
+                    <p:commandButton rendered="#{note_from_list.proofed}" type="button" value="Show" onclick="PF('dlg').show()" icon="ui-icon-extlink"/>
+
+                    <p:dialog header="Images" widgetVar="dlg" modal="true" width="500" height="500" 
+                              draggable="true" resizable="true">
+                        <o:graphicImage 
+                                        value="#{image.getImage(note_from_list.id)}" />
+                    </p:dialog>
+
+                    <p:commandButton  rendered="#{note_from_list.proofed}" 
+                                      value="Pay"/>
+                </p:column>
+                
+                <p:column headerText="Killer">
+                    <h:outputLink value="guest.xhtml">
+                        <f:param name="gquery" value="#{note_from_list.witcherId.id}"/>
+                        <h:outputText value="#{note_from_list.witcherId.login}"/>
+                    </h:outputLink>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
