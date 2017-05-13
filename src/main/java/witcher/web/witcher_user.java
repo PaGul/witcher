@@ -69,7 +69,7 @@ public class witcher_user extends guest_instance {
         }
         return false;
     }
-    
+
     public Boolean checkThisAdWitcherTake() {
         witcherorders potentialOrder = getPotentialOrder();
         if (witcherBean.checkWitcherHasThisOrder(potentialOrder) && !witcherBean.checkWitcherProveTheOrder(potentialOrder)) {
@@ -108,8 +108,6 @@ public class witcher_user extends guest_instance {
 
     public void upload() throws IOException {
         if (file != null) {
-            FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
             witcherorders WitcherOrder = getPotentialOrder();
             InputStream is = file.getInputstream();
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -122,8 +120,11 @@ public class witcher_user extends guest_instance {
             }
 
             buffer.flush();
-
-            witcherBean.proveOrder(WitcherOrder, buffer.toByteArray());
+            if (buffer.size() != 0) {
+                FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+                witcherBean.proveOrder(WitcherOrder, buffer.toByteArray());
+            }
         }
     }
 }

@@ -70,14 +70,4 @@ public class notifications implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dlg').show()");
     }
 
-    public void pay(witcherorders order) {
-        if (adBean.pay(order)) {
-            FacesMessage message = new FacesMessage("Successful payment");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        } else {
-            FacesMessage message = new FacesMessage("Error payment (probably you haven't enough money)");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }
-
 }

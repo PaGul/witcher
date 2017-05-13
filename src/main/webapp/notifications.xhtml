@@ -10,6 +10,7 @@
     </h:head>
     <h:body>
         <h:form id="imgForm">
+            <p:growl id="messages" showDetail="true" />
             <p:dataTable value="#{notifications.notificatedOrders}" var="note_from_list" widgetVar="noteTable"
                          paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -28,12 +29,13 @@
                                      action="#{notifications.showImg(note_from_list)}"
                                      value="Show" 
                                      oncomplete="PF('dlg').show()"/>
-                    <h:form rendered="#{note_from_list.proofed}" >
-                        <p:growl id="messages" showDetail="true" />
-                        <p:commandButton  
-                                          action="#{notifications.pay(note_from_list)}"
-                                          value="Pay"/>
-                    </h:form>
+
+                    <p:commandButton  rendered="#{note_from_list.proofed}"
+                                      action="#{pay_order.pay(note_from_list)}"
+                                      value="Pay" update="imgForm"/>
+                    <p:commandButton  rendered="#{note_from_list.proofed}"
+                                      action="#{pay_order.reject(note_from_list)}"
+                                      value="Reject" update="imgForm"/>
                 </p:column>
 
                 <p:column headerText="Killer">
