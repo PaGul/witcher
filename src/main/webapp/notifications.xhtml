@@ -9,7 +9,7 @@
         <title>Notifications</title>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="imgForm">
             <p:dataTable value="#{notifications.notificatedOrders}" var="note_from_list" widgetVar="noteTable"
                          paginator="true" rows="10"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -24,18 +24,18 @@
                 <p:column headerText="Status">
                     <h:outputText rendered="#{!note_from_list.proofed}" value="Taken"/>
 
-                    <p:commandButton rendered="#{note_from_list.proofed}" type="button" value="Show" onclick="PF('dlg').show()" icon="ui-icon-extlink"/>
-
-                    <p:dialog header="Images" widgetVar="dlg" modal="true" width="500" height="500" 
-                              draggable="true" resizable="true">
-                        <o:graphicImage 
-                                        value="#{image.getImage(note_from_list.id)}" />
-                    </p:dialog>
-
-                    <p:commandButton  rendered="#{note_from_list.proofed}" 
-                                      value="Pay"/>
+                    <p:commandButton rendered="#{note_from_list.proofed}"
+                                     action="#{notifications.showImg(note_from_list)}"
+                                     value="Show" 
+                                     oncomplete="PF('dlg').show()"/>
+                    <h:form rendered="#{note_from_list.proofed}" >
+                        <p:growl id="messages" showDetail="true" />
+                        <p:commandButton  
+                                          action="#{notifications.pay(note_from_list)}"
+                                          value="Pay"/>
+                    </h:form>
                 </p:column>
-                
+
                 <p:column headerText="Killer">
                     <h:outputLink value="guest.xhtml">
                         <f:param name="gquery" value="#{note_from_list.witcherId.id}"/>
@@ -43,6 +43,10 @@
                     </h:outputLink>
                 </p:column>
             </p:dataTable>
+            <p:dialog header="Images" widgetVar="dlg" id="imgDlg" modal="true" width="500" height="500" 
+                      draggable="true" resizable="true">
+                <o:graphicImage value="#{image.getImage(notifications.selectedOrder.id)}"/>
+            </p:dialog>
         </h:form>
     </h:body>
 </html>

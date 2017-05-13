@@ -29,14 +29,13 @@ public class image implements Serializable{
     @EJB
     private NotificationBean notificationBean;
     
-    public byte[] getImage(Long WitcherOrderId) {
-        System.out.println(WitcherOrderId);
-        
-        byte[] proof = notificationBean.getOrder(WitcherOrderId).getProof();
+    public byte[] getImage(Long id) {
+        System.out.println(id);
+//        byte[] proof = notificationBean.getOrder(WitcherOrderId).getProof();
 //        if (proof==null) {
 //            proof = notificationBean.getOrder(9l).getProof();
 //        }
-        return proof;
+        return notificationBean.getOrder(id).getProof();
     }
     
 }

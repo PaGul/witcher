@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import witcher.entities.ad;
+import witcher.entities.guest;
+import witcher.entities.witcherorders;
 
 /**
  *
@@ -60,4 +62,25 @@ public class AdBean {
         return em.merge(Ad);
     }
     
+    public Boolean pay(witcherorders Order) {
+        guest Witcher = Order.getWitcherId();
+        ad Ad = Order.getAdId();
+        guest AdOwner = Ad.getOwner();
+        int oldBalance = AdOwner.getBalance();
+        int adPrice = Ad.getPrice();
+        if (oldBalance>=adPrice) {
+            AdOwner.setBalance(oldBalance-adPrice);
+            int witcherBalance = Witcher.getBalance();
+            Witcher.setBalance(witcherBalance+adPrice);
+            AdOwner.setRating(AdOwner.getRating()+adPrice);
+            Witcher.setRating(Witcher.getRating()+adPrice);
+            witcherorders orderToDelete = em.merge(Order);
+            em.remove(orderToDelete);
+            ad adToDelete = em.merge(Ad);
+            em.remove(adToDelete);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
