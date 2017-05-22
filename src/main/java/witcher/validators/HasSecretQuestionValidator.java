@@ -24,7 +24,7 @@ import witcher.ejbs.GuestBean;
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String login = (String) value;
-        if (!guestBean.hasSecretQuestion(login)) {
+        if (guestBean.hasUserWithLogin(login) && !guestBean.hasSecretQuestion(login)) {
             throw new ValidatorException(new FacesMessage("User hasn't secret question. Suffer."));
         }
     }

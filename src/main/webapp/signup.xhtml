@@ -59,8 +59,7 @@ and open the template in the editor.
                     <p:outputLabel for="squestion" value="Secret question" />
                     <p:inputText id="squestion" value="#{signup.guestInstance.secretquestion}"></p:inputText>
                     <p:outputLabel for="sanswer" value="Secret answer" />
-                    <p:inputText id="sanswer" value="#{signup.guestInstance.secretanswer}">
-                        <f:validateLength minimum="1" maximum="15"/>
+                    <p:inputText id="sanswer" value="#{signup.guestInstance.secretanswer}" validator="signUpSecretQuestion">
                     </p:inputText>
                 </h:panelGrid>
             </p:panel>

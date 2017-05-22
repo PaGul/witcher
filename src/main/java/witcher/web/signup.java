@@ -8,6 +8,7 @@ package witcher.web;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import witcher.ejbs.GuestBean;
 import witcher.entities.guest;
@@ -17,7 +18,7 @@ import witcher.entities.guest;
  * @author pavelgulaev
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class signup implements Serializable {
 
     @EJB
