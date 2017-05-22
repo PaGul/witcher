@@ -62,7 +62,7 @@
                     </p:outputPanel>
                 </f:facet>
 
-                <p:column filterBy="#{ad_from_list.header}" sortBy="#{ad_from_list.date}" 
+                <p:column filterBy="#{ad_from_list.header}" sortBy="#{ad_from_list.adDate}" 
                           filterStyle="display:none" headerText="Header">
                     <h:outputLink value="ad.xhtml">
                         <f:param name="adquery" value="#{ad_from_list.id}"/>
@@ -77,9 +77,9 @@
 
                 </p:column>
 
-                <p:column filterBy="#{ad_from_list.date}" sortBy="#{ad_from_list.date}" 
+                <p:column filterBy="#{ad_from_list.adDate}" sortBy="#{ad_from_list.adDate}" 
                           filterStyle="display:none" headerText="Date">
-                    <h:outputText value="#{ad_from_list.date}"/>
+                    <h:outputText value="#{ad_from_list.adDate}"/>
                 </p:column>
                 <p:column filterBy="#{ad_from_list.owner.login}" sortBy="#{ad_from_list.rating}" 
                           filterStyle="display:none" headerText="Owner (sort by rating)">

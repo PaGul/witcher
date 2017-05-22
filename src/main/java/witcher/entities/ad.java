@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ad.findByText", query = "SELECT a FROM ad a WHERE a.text = :text"),
     @NamedQuery(name = "ad.findByPrice", query = "SELECT a FROM ad a WHERE a.price = :price"),
     @NamedQuery(name = "ad.findByRating", query = "SELECT a FROM ad a WHERE a.rating = :rating"),
-    @NamedQuery(name = "ad.findByDate", query = "SELECT a FROM ad a WHERE a.date = :date")})
+    @NamedQuery(name = "ad.findByAdDate", query = "SELECT a FROM ad a WHERE a.adDate = :adDate")})
 public class ad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,9 +71,9 @@ public class ad implements Serializable {
     private int rating;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "date")
+    @Column(name = "ad_date")
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date adDate;
     @JoinColumn(name = "owner", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private guest owner;
@@ -87,13 +87,13 @@ public class ad implements Serializable {
         this.id = id;
     }
 
-    public ad(Integer id, String header, String text, int price, int rating, Date date) {
+    public ad(Integer id, String header, String text, int price, int rating, Date adDate) {
         this.id = id;
         this.header = header;
         this.text = text;
         this.price = price;
         this.rating = rating;
-        this.date = date;
+        this.adDate = adDate;
     }
 
     public Integer getId() {
@@ -136,12 +136,12 @@ public class ad implements Serializable {
         this.rating = rating;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getAdDate() {
+        return adDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAdDate(Date adDate) {
+        this.adDate = adDate;
     }
 
     public guest getOwner() {

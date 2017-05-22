@@ -18,15 +18,17 @@ and open the template in the editor.
                 <p:messages id="messages" />
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="username" value="Username" />
-                    <p:inputText id="username" value="#{signup.guestInstance.login}" required="true" validator="loginUniqueValidator"></p:inputText>
+                    <p:inputText id="username" value="#{signup.guestInstance.login}" required="true" validator="loginUniqueValidator">
+                        <f:validateLength minimum="4" maximum="20"/>
+                    </p:inputText>
                     <!--<h:message for="username"></h:message>-->
                 </h:panelGrid>
                 <h:panelGrid columns="2" id="password" cellpadding="5">                   
                     <p:outputLabel for="pwd1" value="Password " />
                     <p:password id="pwd1" value="#{signup.guestInstance.password}" match="pwd2" label="Password 1"  feedback="true" required="true">
-                        <f:validateLength minimum="4"/>
+                        <f:validateLength minimum="4" maximum="40"/>
                     </p:password>
-                    
+
                     <p:outputLabel for="pwd2" value="Confirm password " />
                     <p:password id="pwd2" value="#{signup.guestInstance.password}" label="Password 2"  feedback="true" required="true">
                         <f:validateLength minimum="4"/>
@@ -54,10 +56,12 @@ and open the template in the editor.
                 </h:panelGrid>
                 Add secret question for password recovery (optional field) 
                 <h:panelGrid columns="2" cellpadding="5">
-                     <p:outputLabel for="squestion" value="Secret question" />
-                     <p:inputText id="squestion" value="#{signup.guestInstance.secretquestion}"></p:inputText>
-                     <p:outputLabel for="sanswer" value="Secret answer" />
-                     <p:inputText id="sanswer" value="#{signup.guestInstance.secretanswer}"></p:inputText>
+                    <p:outputLabel for="squestion" value="Secret question" />
+                    <p:inputText id="squestion" value="#{signup.guestInstance.secretquestion}"></p:inputText>
+                    <p:outputLabel for="sanswer" value="Secret answer" />
+                    <p:inputText id="sanswer" value="#{signup.guestInstance.secretanswer}">
+                        <f:validateLength minimum="1" maximum="15"/>
+                    </p:inputText>
                 </h:panelGrid>
             </p:panel>
             <p:commandButton update="panel" action="#{signup.completeSignUp()}"

@@ -26,8 +26,6 @@ import witcher.util.SessionUtils;
 public class new_ad implements Serializable {
     @EJB
     private AdBean adBean;
-    @EJB
-    private GuestBean guestBean;
     
     public ad adInstance = new ad();
 
@@ -43,7 +41,7 @@ public class new_ad implements Serializable {
         guest user = SessionUtils.getUser();
         adInstance.setOwner(user);
         Date date = new Date();
-        adInstance.setDate(date);
+        adInstance.setAdDate(date);
         adBean.newAd(adInstance);
         return "index";
     }

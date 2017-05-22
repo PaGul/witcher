@@ -60,7 +60,6 @@ public class notifications implements Serializable {
     }
 
     public void setSelectedOrder(witcherorders selectedOrder) {
-        System.out.println("selected" + selectedOrder.getId());
         this.selectedOrder = selectedOrder;
     }
 

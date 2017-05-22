@@ -14,7 +14,9 @@
                 <p:messages id="messages" />
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="username" value="Username" />
-                    <p:inputText id="username" value="#{login.username}" validator="hasUserValidator"/>
+                    <p:inputText id="username" value="#{login.username}" validator="hasUserValidator">
+                        <f:validateLength minimum="4" maximum="20"/>
+                    </p:inputText>
 
                     <p:outputLabel for="password" value="Password" />
                     <p:password id="password" value="#{login.pwd}"/>

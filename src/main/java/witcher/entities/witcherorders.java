@@ -142,6 +142,6 @@ public class witcherorders implements Serializable {
     public Boolean getProofed() {
         return getProof()!=null;
                 
-    }
+}
     
 }

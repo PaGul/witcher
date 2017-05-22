@@ -42,7 +42,6 @@ public class promotion {
     
     public String saveAdToSession(ad_instance Ad) {
         HttpSession session = SessionUtils.getSession();
-        System.out.println(Ad.getAd()==null);
         session.setAttribute("ad", Ad.getAd());
         return "promotion";
     }

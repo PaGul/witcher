@@ -18,11 +18,11 @@ and open the template in the editor.
                 <p:messages id="messages" />
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="header" value="Header" />
-                    <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true"></p:inputText>
+                    <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true" maxlength="100"></p:inputText>
                 </h:panelGrid>
 
                 <p:outputLabel for="text" value="Text " />
-                <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" required="true"/>
+                <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="1000" counterTemplate="{0} characters remaining." autoResize="false" required="true"/>
                 <h:outputText id="display" />
 
                 <h:panelGrid columns="2" cellpadding="5">
