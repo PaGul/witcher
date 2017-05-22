@@ -28,7 +28,7 @@ public class signup implements Serializable {
      */
     public signup() {
     }
-    public guest guestInstance = new guest(); 
+    public guest guestInstance = new guest();
 
     public guest getGuestInstance() {
         return guestInstance;
@@ -37,13 +37,9 @@ public class signup implements Serializable {
     public void setGuestInstance(guest guestInstance) {
         this.guestInstance = guestInstance;
     }
-    
 
     public String completeSignUp() {
-        if (guestBean.addGuest(guestInstance)) {
-            return "index";
-        } else { 
-            return "unsuccess";
-        }
+        guestBean.addGuest(guestInstance);
+        return "index";
     }
 }

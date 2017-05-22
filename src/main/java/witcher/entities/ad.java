@@ -7,6 +7,8 @@
 package witcher.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -21,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,19 +49,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ad.findByAdDate", query = "SELECT a FROM ad a WHERE a.adDate = :adDate")})
 public class ad implements Serializable {
     private static final long serialVersionUID = 1L;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "AD_SEQ_GEN", sequenceName = "AD_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AD_SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(min = 1, max = 100)
     @Column(name = "header")
     private String header;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
+    @Size(min = 1, max = 1000)
     @Column(name = "text")
     private String text;
     @Basic(optional = false)
@@ -72,7 +77,7 @@ public class ad implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ad_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date adDate;
     @JoinColumn(name = "owner", referencedColumnName = "id")
     @ManyToOne(optional = false)

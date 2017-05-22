@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package witcher.entities;
 
 import java.io.Serializable;
@@ -18,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author pavelgulaev
  */
 @Entity
-@Table(name = "guest")
+@Table(name = "GUEST")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "guest.findAll", query = "SELECT g FROM guest g"),
@@ -45,9 +46,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating"),
     @NamedQuery(name = "guest.findByBalance", query = "SELECT g FROM guest g WHERE g.balance = :balance")})
 public class guest implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "SEQ_GEN", sequenceName = "GUEST_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -96,6 +99,8 @@ public class guest implements Serializable {
     private Collection<witcherorders> witcherordersCollection;
 
     public guest() {
+        this.rating = 0;
+        this.balance = 0;
     }
 
     public guest(Integer id) {
@@ -153,11 +158,11 @@ public class guest implements Serializable {
         this.name = name;
     }
 
-    public int getUserType() {
+    public Integer getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(Integer userType) {
         this.userType = userType;
     }
 
@@ -177,19 +182,19 @@ public class guest implements Serializable {
         this.secretanswer = secretanswer;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
-    public int getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 
@@ -235,5 +240,5 @@ public class guest implements Serializable {
     public String toString() {
         return "witcher.entities.guest[ id=" + id + " ]";
     }
-    
+
 }

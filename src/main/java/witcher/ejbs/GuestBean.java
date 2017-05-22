@@ -36,9 +36,8 @@ public class GuestBean {
         return !(query.setParameter("login", username).setParameter("password", password).getResultList().isEmpty());
     }
 
-    public Boolean addGuest(guest guestInst) {
+    public void addGuest(guest guestInst) {
         em.persist(guestInst);
-        return true;
     }
 
     public Boolean checkIfQueryExists(String query) {

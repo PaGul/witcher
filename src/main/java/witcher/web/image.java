@@ -29,8 +29,7 @@ public class image implements Serializable{
     @EJB
     private NotificationBean notificationBean;
     
-    public byte[] getImage(Long id) {
-        System.out.println(id);
+    public byte[] getImage(Integer id) {
 //        byte[] proof = notificationBean.getOrder(WitcherOrderId).getProof();
 //        if (proof==null) {
 //            proof = notificationBean.getOrder(9l).getProof();

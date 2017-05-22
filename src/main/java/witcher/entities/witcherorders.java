@@ -6,7 +6,14 @@
 
 package witcher.entities;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +25,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,15 +48,17 @@ public class witcherorders implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "notificated")
-    private int notificated;
+    private Integer notificated;
     @Lob
     @Column(name = "proof")
     private byte[] proof;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "WO_SEQ_GEN", sequenceName = "WO_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "WO_SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @JoinColumn(name = "ad_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private ad adId;
@@ -59,11 +69,11 @@ public class witcherorders implements Serializable {
     public witcherorders() {
     }
 
-    public witcherorders(Long id) {
+    public witcherorders(Integer id) {
         this.id = id;
     }
 
-    public witcherorders(Long id, int notificated) {
+    public witcherorders(Integer id, Integer notificated) {
         this.id = id;
         this.notificated = notificated;
     }
@@ -71,6 +81,7 @@ public class witcherorders implements Serializable {
     public witcherorders(guest witcherId, ad adId) {
         this.adId = adId;
         this.witcherId = witcherId;
+        this.notificated = 0;
     }
 
     
@@ -78,23 +89,54 @@ public class witcherorders implements Serializable {
         return notificated;
     }
 
-    public void setNotificated(int notificated) {
+    public void setNotificated(Integer notificated) {
         this.notificated = notificated;
     }
 
     public byte[] getProof() {
+//        if (proof==null) return null;
+//        try {
+//            return serialize(proof);
+//        } catch (IOException ex) {
+//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
         return proof;
     }
 
     public void setProof(byte[] proof) {
+//        try {
+//            this.proof = (Serializable) deserialize(proof);
+//        } catch (IOException ex) {
+//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         this.proof = proof;
     }
 
-    public Long getId() {
+    public static byte[] serialize(Object obj) throws IOException {
+        try(ByteArrayOutputStream b = new ByteArrayOutputStream()){
+            try(ObjectOutputStream o = new ObjectOutputStream(b)){
+                o.writeObject(obj);
+            }
+            return b.toByteArray();
+        }
+    }
+    
+    public static Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
+        try(ByteArrayInputStream b = new ByteArrayInputStream(bytes)){
+            try(ObjectInputStream o = new ObjectInputStream(b)){
+                return o.readObject();
+            }
+        }
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
