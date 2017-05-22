@@ -7,9 +7,11 @@ package witcher.web;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import witcher.ejbs.GuestBean;
 import witcher.entities.guest;
 
@@ -41,6 +43,8 @@ public class signup implements Serializable {
 
     public String completeSignUp() {
         guestBean.addGuest(guestInstance);
-        return "index";
+        FacesMessage message = new FacesMessage("Sign up complete");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        return "signin";
     }
 }
