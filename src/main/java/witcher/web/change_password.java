@@ -59,10 +59,8 @@ public class change_password implements Serializable {
 
     public String changePassword() {
         id = SessionUtils.getUserId();
-        String answer;
         guestBean.changePassword(id, password);
-        answer = "index";
         session.invalidate();
-        return answer;
+        return "index";
     }
 }

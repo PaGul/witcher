@@ -74,11 +74,12 @@ public class login implements Serializable {
     }
     
     public Boolean getLoggedSession() {
-        if (SessionUtils.getUser()!=null) {
-            return false;
-        } else {
-            return true;
-        }
+        return SessionUtils.getUser()==null;
+//        if (SessionUtils.getUser()!=null) {
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
 
 }

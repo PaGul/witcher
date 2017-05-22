@@ -39,9 +39,7 @@ public class get_money extends guest_instance {
     
     public String addMoney() {
         guest user = SessionUtils.getUser();
-        int balance = user.getBalance();
-        user.setBalance(balance+money);
-        guestBean.update(user);
+        guestBean.changeBalance(user, money);
         return "index";
     }
 }

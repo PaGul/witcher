@@ -58,8 +58,11 @@ public class AdBean {
         em.persist(adInstance);
     }
 
-    public ad update(ad Ad) {
-        return em.merge(Ad);
+    
+    public void changeRating(ad Ad, int delta) {
+        int rating = Ad.getRating();
+        Ad.setRating(rating+delta);
+        em.merge(Ad);
     }
 
     public Boolean pay(witcherorders Order) {
@@ -74,6 +77,8 @@ public class AdBean {
             Witcher.setBalance(witcherBalance + adPrice);
             AdOwner.setRating(AdOwner.getRating() + adPrice);
             Witcher.setRating(Witcher.getRating() + adPrice);
+            em.merge(Witcher);
+            em.merge(AdOwner);
             witcherorders orderToDelete = em.merge(Order);
             em.remove(orderToDelete);
             ad adToDelete = em.merge(Ad);

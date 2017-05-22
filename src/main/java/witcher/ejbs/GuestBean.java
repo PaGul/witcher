@@ -122,8 +122,16 @@ public class GuestBean {
         currUser.setPassword(newPassword);
     }
     
-    public guest update(guest User) {
-        return em.merge(User);
+    public void changeBalance(guest User, int delta) {
+        int balance = User.getBalance();
+        User.setBalance(balance+delta);
+        em.merge(User);
+    }
+    
+    public void changeRating(guest User, int delta) {
+        int rating = User.getRating();
+        User.setBalance(rating+delta);
+        em.merge(User);
     }
     
 }

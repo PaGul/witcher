@@ -5,10 +5,12 @@
  */
 package witcher.web;
 
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import witcher.ejbs.AdBean;
 import witcher.ejbs.GuestBean;
@@ -32,6 +34,12 @@ public class customer_user extends guest_instance {
     @EJB 
     private NotificationBean notificationBean;
 
+    public void checkAccessToCustomerPage() throws IOException {
+        if (!getCustomerLoggedSession()) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
+        }
+    }
+    
     public Boolean getCustomerLoggedSession() {
         if (SessionUtils.getUser() != null && SessionUtils.getUser().getUserType() == 2) {
             return true;

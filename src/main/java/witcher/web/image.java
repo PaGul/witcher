@@ -30,10 +30,6 @@ public class image implements Serializable{
     private NotificationBean notificationBean;
     
     public byte[] getImage(Integer id) {
-//        byte[] proof = notificationBean.getOrder(WitcherOrderId).getProof();
-//        if (proof==null) {
-//            proof = notificationBean.getOrder(9l).getProof();
-//        }
         return notificationBean.getOrder(id).getProof();
     }
     

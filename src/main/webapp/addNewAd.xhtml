@@ -13,6 +13,7 @@ and open the template in the editor.
         <title>Add new ad</title>
     </h:head>
     <h:body>
+        #{customer_user.checkAccessToCustomerPage()}
         <h:form>
             <p:panel id="panel" header="New ad" style="margin-bottom:10px;">
                 <p:messages id="messages" />

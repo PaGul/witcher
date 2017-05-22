@@ -37,25 +37,26 @@ public class NotificationBean {
     }
 
     private List<witcherorders> getNewOrders(guest Customer) {
-//        Query userAdsQuery = em.createQuery("SELECT a.id FROM ad a WHERE a.owner=:userid");
-//        List<Integer> userAdsIdList = userAdsQuery.setParameter("userid", Customer).getResultList();
-//        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
-//        List<witcherorders> notNotificatedOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
-        List<witcherorders> notNotificatedOrdersList = new LinkedList<>();
-        Collection<ad> adCollection = Customer.getAdCollection();
-        if (adCollection != null) {
-            for (ad Ad : adCollection) {
-                Collection<witcherorders> witcherordersCollection = Ad.getWitcherordersCollection();
-                if (witcherordersCollection != null) {
-                    for (witcherorders wo : witcherordersCollection) {
-                        if (wo.getNotificated() == 0) {
-                            notNotificatedOrdersList.add(wo);
-                        }
-                    }
-                }
-            }
-        }
-        return notNotificatedOrdersList;
+        Query userAdsQuery = em.createQuery("SELECT a.id FROM ad a WHERE a.owner=:userid");
+        List<Integer> userAdsIdList = userAdsQuery.setParameter("userid", Customer).getResultList();
+        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
+        List<witcherorders> notNotificatedOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
+        
+//        List<witcherorders> notNotificatedOrdersQueryList = new LinkedList<>();
+//        Collection<ad> adCollection = Customer.getAdCollection();
+//        if (adCollection != null) {
+//            for (ad Ad : adCollection) {
+//                Collection<witcherorders> witcherordersCollection = Ad.getWitcherordersCollection();
+//                if (witcherordersCollection != null) {
+//                    for (witcherorders wo : witcherordersCollection) {
+//                        if (wo.getNotificated() == 0) {
+//                            notNotificatedOrdersQueryList.add(wo);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        return notNotificatedOrdersQueryList;
     }
 
     public List<witcherorders> getNewNotificatedOrders(guest Customer) {

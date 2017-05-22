@@ -46,18 +46,12 @@ public class promotion {
         return "promotion";
     }
     
-    
-    
     public String promote() {
         HttpSession session = SessionUtils.getSession();
         ad currAd = (ad) session.getAttribute("ad");
         guest user = SessionUtils.getUser();
-        int balance = user.getBalance();
-        user.setBalance(balance-money);
-        guestBean.update(user);
-        int rating = currAd.getRating();
-        currAd.setRating(rating+money);
-        adBean.update(currAd);
+        guestBean.changeBalance(user, -money);
+        adBean.changeRating(currAd, money);
         session.removeAttribute("ad");
         return "index";
     }
