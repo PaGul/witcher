@@ -33,12 +33,15 @@ public class NotificationBean {
 
     public Boolean hasNewOrders(guest Customer) {
         Collection<witcherorders> notNotificatedOrdersQueryList = getNewOrders(Customer);
-        return (!notNotificatedOrdersQueryList.isEmpty() && notNotificatedOrdersQueryList.size() > 0);
+        return (notNotificatedOrdersQueryList!=null && !notNotificatedOrdersQueryList.isEmpty() && notNotificatedOrdersQueryList.size() > 0);
     }
 
     private List<witcherorders> getNewOrders(guest Customer) {
         Query userAdsQuery = em.createQuery("SELECT a.id FROM ad a WHERE a.owner=:userid");
         List<Integer> userAdsIdList = userAdsQuery.setParameter("userid", Customer).getResultList();
+        if (userAdsIdList==null || userAdsIdList.isEmpty()) {
+            return null;
+        }
         Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
         List<witcherorders> notNotificatedOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
         

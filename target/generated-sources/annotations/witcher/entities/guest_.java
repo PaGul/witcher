@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import witcher.entities.ad;
 import witcher.entities.witcherorders;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-05-22T17:16:44")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-05-28T23:41:04")
 @StaticMetamodel(guest.class)
 public class guest_ { 
 

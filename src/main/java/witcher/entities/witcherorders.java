@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -94,24 +92,10 @@ public class witcherorders implements Serializable {
     }
 
     public byte[] getProof() {
-//        if (proof==null) return null;
-//        try {
-//            return serialize(proof);
-//        } catch (IOException ex) {
-//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return null;
         return proof;
     }
 
     public void setProof(byte[] proof) {
-//        try {
-//            this.proof = (Serializable) deserialize(proof);
-//        } catch (IOException ex) {
-//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(witcherorders.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         this.proof = proof;
     }
 

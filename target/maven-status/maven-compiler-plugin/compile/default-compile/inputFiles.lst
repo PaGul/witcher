@@ -10,6 +10,7 @@
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/web/pay_order.java
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/ejbs/NotificationBean.java
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/web/recoverpassword.java
+/Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/validators/SignUpHasSecretQuestion.java
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/web/login.java
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/entities/ad.java
 /Users/pavelgulaev/Desktop/vedmak/Vedmak/src/main/java/witcher/web/promotion.java
