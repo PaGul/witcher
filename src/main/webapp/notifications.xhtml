@@ -9,6 +9,14 @@
         <title>Notifications</title>
     </h:head>
     <h:body>
+        <h:form id="form">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:selectOneButton id="notificationType" value="#{notifications.notificationType}" onchange="$('#form').submit()">
+                    <f:selectItem itemLabel="All" itemValue="All" />
+                    <f:selectItem itemLabel="Only new" itemValue="Only new" />
+                </p:selectOneButton>
+            </h:panelGrid>
+        </h:form>
         <h:form id="imgForm">
             <p:growl id="messages" showDetail="true" />
             <p:dataTable value="#{notifications.notificatedOrders}" var="note_from_list" widgetVar="noteTable"

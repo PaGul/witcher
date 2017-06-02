@@ -66,6 +66,15 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/customer_additional_params.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
@@ -139,6 +148,13 @@
         </navigation-case>
     </navigation-rule>
     
-        
+    <navigation-rule>
+        <from-view-id>/guest.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>customer_additional_params</from-outcome>
+            <to-view-id>/customer_additional_params.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>    
 
 </faces-config>

@@ -39,24 +39,9 @@ public class NotificationBean {
         if (userAdsIdList==null || userAdsIdList.isEmpty()) {
             return null;
         }
-        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds");
-//        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
+        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
         List<witcherorders> notNotificatedOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
         
-//        List<witcherorders> notNotificatedOrdersQueryList = new LinkedList<>();
-//        Collection<ad> adCollection = Customer.getAdCollection();
-//        if (adCollection != null) {
-//            for (ad Ad : adCollection) {
-//                Collection<witcherorders> witcherordersCollection = Ad.getWitcherordersCollection();
-//                if (witcherordersCollection != null) {
-//                    for (witcherorders wo : witcherordersCollection) {
-//                        if (wo.getNotificated() == 0) {
-//                            notNotificatedOrdersQueryList.add(wo);
-//                        }
-//                    }
-//                }
-//            }
-//        }
         return notNotificatedOrdersQueryList;
     }
 
@@ -66,6 +51,18 @@ public class NotificationBean {
             order.setNotificated(1);
         }
         return notificatedOrdersQueryList;
+    }
+    
+    public List<witcherorders> getAllOrders(guest Customer) {
+        Query userAdsQuery = em.createQuery("SELECT a.id FROM ad a WHERE a.owner=:userid");
+        List<Integer> userAdsIdList = userAdsQuery.setParameter("userid", Customer).getResultList();
+        if (userAdsIdList==null || userAdsIdList.isEmpty()) {
+            return null;
+        }
+        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds");
+        List<witcherorders> allOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
+        
+        return allOrdersQueryList;
     }
 
     public witcherorders getOrder(Integer id) {

@@ -48,7 +48,7 @@
             </h:form>
             
             <h:form>
-                <p:commandButton rendered="#{customer_user.customerLoggedSession}" value="All notifications"  action="notifications" update="registered unregistered" ajax="true"/>
+                <p:commandButton rendered="#{customer_user.customerLoggedSession}" value="Get notifications"  action="notifications" update="registered unregistered" ajax="true"/>
             </h:form>
             <h:outputText rendered="#{customer_user.checkNotifications()}"  style="color: red"
                           value="You have new notifications"/>

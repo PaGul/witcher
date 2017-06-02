@@ -30,10 +30,26 @@ public class notifications implements Serializable {
     @EJB
     private AdBean adBean;
     private List<witcherorders> notificatedOrders;
+    
+    private String notificationType = "Only new";
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
+    
+    
 
     public List<witcherorders> getNotificatedOrders() {
         guest Customer = SessionUtils.getUser();
-        notificatedOrders = notificationBean.getNewNotificatedOrders(Customer);
+        if (notificationType.equals("Only new")) {
+            notificatedOrders = notificationBean.getNewNotificatedOrders(Customer);
+        } else {
+            notificatedOrders = notificationBean.getAllOrders(Customer);
+        }
         return notificatedOrders;
     }
 
