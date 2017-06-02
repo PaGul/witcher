@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import witcher.entities.witcher;
 import witcher.entities.witcherorders;
 
 /**
@@ -64,5 +65,14 @@ public class WitcherBean extends GuestBean {
         Order.setProof(file);
         Order.setNotificated(0);
         em.merge(Order);
+    }
+    
+    public void addInfoAboutHorse(witcher params) {
+        witcher witcherInfo = em.find(witcher.class, params.getGuestId());
+        if (witcherInfo!=null) {
+            witcherInfo.setHasHorse(params.getHasHorse());
+        } else {
+            em.persist(params);
+        }
     }
 }

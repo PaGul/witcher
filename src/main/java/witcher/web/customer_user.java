@@ -6,18 +6,15 @@
 package witcher.web;
 
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-import witcher.ejbs.AdBean;
-import witcher.ejbs.GuestBean;
+import witcher.ejbs.CustomerBean;
 import witcher.ejbs.NotificationBean;
-import witcher.entities.ad;
+import witcher.entities.customer;
 import witcher.entities.guest;
-import witcher.entities.witcherorders;
 import witcher.util.SessionUtils;
 
 /**
@@ -33,6 +30,9 @@ public class customer_user extends guest_instance {
 
     @EJB 
     private NotificationBean notificationBean;
+    
+    @EJB
+    private CustomerBean customerBean;
 
     public void checkAccessToCustomerPage() throws IOException {
         if (!getCustomerLoggedSession()) {
@@ -65,5 +65,20 @@ public class customer_user extends guest_instance {
         if (!getCustomerLoggedSession()) return false;
         guest customer = SessionUtils.getUser();
         return notificationBean.hasNewOrders(customer);
+    }
+    
+    private customer additionalParams = new customer(SessionUtils.getUserId());
+
+    public customer getAdditionalParams() {
+        return additionalParams;
+    }
+
+    public void setAdditionalParams(customer additionalParams) {
+        this.additionalParams = additionalParams;
+    }
+    
+    public String addRegion() {
+        customerBean.addRegion(additionalParams);
+        return "index";
     }
 }

@@ -128,8 +128,6 @@ public class GuestBean {
     }
     
     public void changeBalance(guest User, int delta) {
-//        guest thisUser = em.find(guest.class, User.getId());
-//        creditcard cr_card = thisUser.getCreditcard();
         creditcard cr_card = User.getCreditcard();
         int balance = cr_card.getBalance();
         cr_card.setBalance(balance+delta);

@@ -6,13 +6,8 @@
 package witcher.web;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,6 +18,7 @@ import witcher.ejbs.AdBean;
 import witcher.ejbs.WitcherBean;
 import witcher.entities.ad;
 import witcher.entities.guest;
+import witcher.entities.witcher;
 import witcher.entities.witcherorders;
 import witcher.util.SessionUtils;
 
@@ -41,7 +37,7 @@ public class witcher_user extends guest_instance {
     private WitcherBean witcherBean;
     @EJB
     private AdBean adBean;
-
+    
     private String getAdQuery() {
         return FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("adquery");
     }
@@ -129,5 +125,20 @@ public class witcher_user extends guest_instance {
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
         }
+    }
+    
+    private witcher additionalParams = new witcher(SessionUtils.getUserId());
+
+    public witcher getAdditionalParams() {
+        return additionalParams;
+    }
+
+    public void setAdditionalParams(witcher additionalParams) {
+        this.additionalParams = additionalParams;
+    }
+    
+    public String addInfoAboutHorse() {
+        witcherBean.addInfoAboutHorse(additionalParams);
+        return "index";
     }
 }
