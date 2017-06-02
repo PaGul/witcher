@@ -14,61 +14,6 @@
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/signin.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/get_money.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/change_bank.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/addNewAd.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/changepassword.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/witcher_additional_params.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/customer_additional_params.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
