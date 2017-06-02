@@ -30,6 +30,12 @@ and open the template in the editor.
                     <h:outputLabel for="price" value="Price: " />
                     <p:spinner id="price" value="#{new_ad.adInstance.price}" min="0" max="1000" required="true" />
                 </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="Monster type" value="Price: " />
+                    <h:selectOneMenu value="#{new_ad.adInstance.monsterId}" >
+                        <f:selectItems value="#{new_ad.allMonsters}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
             </p:panel>
             <p:commandButton update="panel" action="#{new_ad.newAd()}"
                              value="Create"></p:commandButton>

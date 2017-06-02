@@ -5,15 +5,12 @@
  */
 package witcher.ejbs;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import witcher.entities.ad;
 import witcher.entities.guest;
 import witcher.entities.witcherorders;
 
@@ -42,7 +39,8 @@ public class NotificationBean {
         if (userAdsIdList==null || userAdsIdList.isEmpty()) {
             return null;
         }
-        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
+        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds");
+//        Query notNotificatedOrdersQuery = em.createQuery("SELECT wo FROM witcherorders wo WHERE wo.adId IN :adIds AND wo.notificated=0");
         List<witcherorders> notNotificatedOrdersQueryList = notNotificatedOrdersQuery.setParameter("adIds", userAdsIdList).getResultList();
         
 //        List<witcherorders> notNotificatedOrdersQueryList = new LinkedList<>();
@@ -64,9 +62,9 @@ public class NotificationBean {
 
     public List<witcherorders> getNewNotificatedOrders(guest Customer) {
         List<witcherorders> notificatedOrdersQueryList = getNewOrders(Customer);
-//        for (witcherorders order : notificatedOrdersQueryList) {
-//            order.setNotificated(1);
-//        }
+        for (witcherorders order : notificatedOrdersQueryList) {
+            order.setNotificated(1);
+        }
         return notificatedOrdersQueryList;
     }
 

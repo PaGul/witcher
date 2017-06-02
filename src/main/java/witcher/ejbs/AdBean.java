@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import witcher.entities.ad;
+import witcher.entities.creditcard;
 import witcher.entities.guest;
 import witcher.entities.witcherorders;
 
@@ -34,13 +35,13 @@ public class AdBean {
     }
 
     private TypedQuery<ad> getAdsByIdQuery(String id) {
-        Long idLong = 0l;
+        Integer idInteger = 0;
         try {
-            idLong = Long.parseLong(id);
+            idInteger = Integer.parseInt(id);
         } catch (NumberFormatException e) {
         }
         TypedQuery<ad> query = em.createNamedQuery("ad.findById", ad.class);
-        TypedQuery<ad> adByIdQuery = query.setParameter("id", idLong);
+        TypedQuery<ad> adByIdQuery = query.setParameter("id", idInteger);
         return adByIdQuery;
     }
 
@@ -69,16 +70,20 @@ public class AdBean {
         guest Witcher = Order.getWitcherId();
         ad Ad = Order.getAdId();
         guest AdOwner = Ad.getOwner();
-        int oldBalance = AdOwner.getBalance();
+        creditcard AdOwnerCreditCard = AdOwner.getCreditcard();
+        int oldBalance = AdOwnerCreditCard.getBalance();
         int adPrice = Ad.getPrice();
         if (oldBalance >= adPrice) {
-            AdOwner.setBalance(oldBalance - adPrice);
-            int witcherBalance = Witcher.getBalance();
-            Witcher.setBalance(witcherBalance + adPrice);
+            AdOwnerCreditCard.setBalance(oldBalance - adPrice);
+            creditcard WitcherCreditCard = Witcher.getCreditcard();
+            int witcherBalance = WitcherCreditCard.getBalance();
+            WitcherCreditCard.setBalance(witcherBalance + adPrice);
             AdOwner.setRating(AdOwner.getRating() + adPrice);
             Witcher.setRating(Witcher.getRating() + adPrice);
             em.merge(Witcher);
             em.merge(AdOwner);
+            em.merge(AdOwnerCreditCard);
+            em.merge(WitcherCreditCard);
             witcherorders orderToDelete = em.merge(Order);
             em.remove(orderToDelete);
             ad adToDelete = em.merge(Ad);

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ApplicationScoped;
+import witcher.ejbs.MonsterBean;
 import witcher.ejbs.NotificationBean;
 
 /**
@@ -29,8 +30,15 @@ public class image implements Serializable{
     @EJB
     private NotificationBean notificationBean;
     
+    @EJB
+    private MonsterBean monsterBean;
+    
     public byte[] getImage(Integer id) {
         return notificationBean.getOrder(id).getProof();
+    }
+    
+    public byte[] getMonsterImage(Integer id) {
+        return monsterBean.getMonsterById(id.toString()).getPhoto();
     }
     
 }

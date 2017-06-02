@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import witcher.entities.creditcard;
 import witcher.entities.guest;
 
 /**
@@ -37,6 +38,10 @@ public class GuestBean {
     }
 
     public void addGuest(guest guestInst) {
+        creditcard crcard = new creditcard();
+        em.persist(crcard);
+        em.flush();
+        guestInst.setCrCardId(crcard.getId());
         em.persist(guestInst);
     }
 
@@ -45,7 +50,7 @@ public class GuestBean {
     }
     
     public guest getGuestById(int id) {
-        guest guest_instance = (guest) (em.find(guest.class, id));
+        guest guest_instance = em.find(guest.class, id);
         return guest_instance;
     }
 
@@ -123,14 +128,17 @@ public class GuestBean {
     }
     
     public void changeBalance(guest User, int delta) {
-        int balance = User.getBalance();
-        User.setBalance(balance+delta);
-        em.merge(User);
+//        guest thisUser = em.find(guest.class, User.getId());
+//        creditcard cr_card = thisUser.getCreditcard();
+        creditcard cr_card = User.getCreditcard();
+        int balance = cr_card.getBalance();
+        cr_card.setBalance(balance+delta);
+        em.merge(cr_card);
     }
     
     public void changeRating(guest User, int delta) {
         int rating = User.getRating();
-        User.setBalance(rating+delta);
+        User.setRating(rating+delta);
         em.merge(User);
     }
     

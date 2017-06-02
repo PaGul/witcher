@@ -25,7 +25,7 @@ import witcher.util.SessionUtils;
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         Integer money = (Integer) value;
-        Integer balance = SessionUtils.getUser().getBalance();
+        Integer balance = SessionUtils.getUser().getCreditcard().getBalance();
         if (money>balance) {
             throw new ValidatorException(new FacesMessage("You haven't enough money. Your balance is "+balance));
         }

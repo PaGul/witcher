@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package witcher.entities;
 
 import java.io.Serializable;
@@ -14,9 +15,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -44,9 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findBySecretquestion", query = "SELECT g FROM guest g WHERE g.secretquestion = :secretquestion"),
     @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
     @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating"),
-    @NamedQuery(name = "guest.findByBalance", query = "SELECT g FROM guest g WHERE g.balance = :balance")})
+    @NamedQuery(name = "guest.findByCrCardId", query = "SELECT g FROM guest g WHERE g.crCardId = :crCardId")})
 public class guest implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "SEQ_GEN", sequenceName = "GUEST_SEQ", allocationSize = 1)
@@ -91,23 +93,29 @@ public class guest implements Serializable {
     private int rating;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "balance")
-    private int balance;
+    @Column(name = "CR_CARD_ID")
+    private int crCardId;
+    @JoinColumn(name = "CR_CARD_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private creditcard creditcard;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Collection<ad> adCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "guest")
+    private customer customer;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "guest")
+    private witcher witcher;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "witcherId")
     private Collection<witcherorders> witcherordersCollection;
 
     public guest() {
         this.rating = 0;
-        this.balance = 0;
     }
 
     public guest(Integer id) {
         this.id = id;
     }
 
-    public guest(Integer id, String login, String password, String email, String name, int userType, int rating, int balance) {
+    public guest(Integer id, String login, String password, String email, String name, int userType, int rating, int crCardId) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -115,7 +123,7 @@ public class guest implements Serializable {
         this.name = name;
         this.userType = userType;
         this.rating = rating;
-        this.balance = balance;
+        this.crCardId = crCardId;
     }
 
     public Integer getId() {
@@ -182,20 +190,28 @@ public class guest implements Serializable {
         this.secretanswer = secretanswer;
     }
 
-    public Integer getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
-    public Integer getBalance() {
-        return balance;
+    public int getCrCardId() {
+        return crCardId;
     }
 
-    public void setBalance(Integer balance) {
-        this.balance = balance;
+    public void setCrCardId(int crCardId) {
+        this.crCardId = crCardId;
+    }
+
+    public creditcard getCreditcard() {
+        return creditcard;
+    }
+
+    public void setCreditcard(creditcard creditcard) {
+        this.creditcard = creditcard;
     }
 
     @XmlTransient
@@ -240,5 +256,5 @@ public class guest implements Serializable {
     public String toString() {
         return "witcher.entities.guest[ id=" + id + " ]";
     }
-
+    
 }

@@ -7,8 +7,6 @@
 package witcher.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -23,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author pavelgulaev
  */
 @Entity
-@Table(name = "ad")
+@Table(name = "AD")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ad.findAll", query = "SELECT a FROM ad a"),
@@ -46,10 +45,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ad.findByText", query = "SELECT a FROM ad a WHERE a.text = :text"),
     @NamedQuery(name = "ad.findByPrice", query = "SELECT a FROM ad a WHERE a.price = :price"),
     @NamedQuery(name = "ad.findByRating", query = "SELECT a FROM ad a WHERE a.rating = :rating"),
-    @NamedQuery(name = "ad.findByAdDate", query = "SELECT a FROM ad a WHERE a.adDate = :adDate")})
+    @NamedQuery(name = "ad.findByAdDate", query = "SELECT a FROM ad a WHERE a.adDate = :adDate"),
+    @NamedQuery(name = "ad.findByMonsterId", query = "SELECT a FROM ad a WHERE a.monsterId = :monsterId")})
 public class ad implements Serializable {
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @SequenceGenerator(name = "AD_SEQ_GEN", sequenceName = "AD_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AD_SEQ_GEN")
@@ -58,12 +57,12 @@ public class ad implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 2147483647)
     @Column(name = "header")
     private String header;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 1, max = 2147483647)
     @Column(name = "text")
     private String text;
     @Basic(optional = false)
@@ -79,7 +78,14 @@ public class ad implements Serializable {
     @Column(name = "ad_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date adDate;
-    @JoinColumn(name = "owner", referencedColumnName = "id")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MONSTER_ID")
+    private int monsterId;
+    @JoinColumn(name = "MONSTER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private bestiary bestiary;
+    @JoinColumn(name = "OWNER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private guest owner;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adId")
@@ -92,13 +98,14 @@ public class ad implements Serializable {
         this.id = id;
     }
 
-    public ad(Integer id, String header, String text, int price, int rating, Date adDate) {
+    public ad(Integer id, String header, String text, int price, int rating, Date adDate, int monsterId) {
         this.id = id;
         this.header = header;
         this.text = text;
         this.price = price;
         this.rating = rating;
         this.adDate = adDate;
+        this.monsterId = monsterId;
     }
 
     public Integer getId() {
@@ -147,6 +154,22 @@ public class ad implements Serializable {
 
     public void setAdDate(Date adDate) {
         this.adDate = adDate;
+    }
+
+    public int getMonsterId() {
+        return monsterId;
+    }
+
+    public void setMonsterId(int monsterId) {
+        this.monsterId = monsterId;
+    }
+
+    public bestiary getBestiary() {
+        return bestiary;
+    }
+
+    public void setBestiary(bestiary bestiary) {
+        this.bestiary = bestiary;
     }
 
     public guest getOwner() {
