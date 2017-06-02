@@ -121,9 +121,12 @@ public class witcher_user extends guest_instance {
 
             buffer.flush();
             if (buffer.size() != 0) {
-                FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
+                FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded." + file.getContentType());
                 FacesContext.getCurrentInstance().addMessage(null, message);
                 witcherBean.proveOrder(WitcherOrder, buffer.toByteArray());
+            } else {
+                FacesMessage message = new FacesMessage("Uploading error file" + file.getContentType());
+                FacesContext.getCurrentInstance().addMessage(null, message);
             }
         }
     }

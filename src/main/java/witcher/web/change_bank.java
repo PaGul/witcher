@@ -15,7 +15,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import witcher.ejbs.BankBean;
 import witcher.entities.bank;
-import witcher.entities.bestiary;
 import witcher.entities.guest;
 import witcher.util.SessionUtils;
 

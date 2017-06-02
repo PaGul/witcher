@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package witcher.web;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
 import witcher.ejbs.GuestBean;
 import witcher.util.SessionUtils;
@@ -19,9 +22,9 @@ import witcher.util.SessionUtils;
  * @author pavelgulaev
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class recoverpassword implements Serializable {
-    
+
     @EJB
     private GuestBean guestBean;
 
@@ -48,7 +51,7 @@ public class recoverpassword implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getSecretAnswer() {
         return secretAnswer;
     }
@@ -56,11 +59,10 @@ public class recoverpassword implements Serializable {
     public void setSecretAnswer(String secretAnswer) {
         this.secretAnswer = secretAnswer;
     }
-    
+
     public String getSecretQuestion() {
         return secretQuestion;
     }
-    
 
     public String getLogin() {
         return login;
@@ -70,20 +72,21 @@ public class recoverpassword implements Serializable {
         this.login = login;
     }
 
-   
     public String goToAnsweringQuestion() {
         id = guestBean.getIdByLogin(login);
         secretQuestion = guestBean.getSecretQuestion(id);
         return "asksecretquestion";
     }
-    
+
     public String checkSecretAnswer() {
         HttpSession session = SessionUtils.getSession();
         if (secretAnswer.equals(guestBean.getSecretAnswer(id))) {
             session.setAttribute("userid", id);
             return "changepassword";
         } else {
-            return "wrong_secret_answer";
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "Your message: " + "You forget your secret answer"));
+            return "asksecretquestion";
         }
     }
 }

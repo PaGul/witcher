@@ -29,17 +29,17 @@
             </h:form>
 
             <h:form rendered="#{!login.loggedSession}">
-                <p:commandButton action="get_money.xhtml"
+                <p:commandButton action="get_money"
                                  value="Get money"></p:commandButton>
             </h:form>
             
             <h:form rendered="#{!login.loggedSession}">
-                <p:commandButton action="change_bank.xhtml"
+                <p:commandButton action="change_bank"
                                  value="Change bank"></p:commandButton>
             </h:form>
 
             <h:form>
-                <p:commandButton rendered="#{!login.loggedSession}" value="Change password" action="changepassword.xhtml"/>
+                <p:commandButton rendered="#{!login.loggedSession}" value="Change password" action="changepassword"/>
             </h:form>
 
             <h:form rendered="#{customer_user.customerLoggedSession}">
