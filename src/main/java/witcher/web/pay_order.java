@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import witcher.ejbs.AdBean;
+import witcher.ejbs.BankBean;
 import witcher.entities.ad;
 import witcher.entities.witcherorders;
 
@@ -25,11 +26,11 @@ import witcher.entities.witcherorders;
 @SessionScoped
 public class pay_order implements Serializable {
     @EJB
-    private AdBean adBean;
+    private BankBean bankBean;
     
     
     public void pay(witcherorders order) {
-        if (adBean.pay(order)) {
+        if (bankBean.pay(order)) {
             FacesMessage message = new FacesMessage("Successful payment");
             FacesContext.getCurrentInstance().addMessage(null, message);
         } else {
@@ -39,7 +40,7 @@ public class pay_order implements Serializable {
     }
    
     public void reject(witcherorders order) {
-        adBean.rejectComplitedOrder(order);
+        bankBean.rejectComplitedOrder(order);
     }
     
 }

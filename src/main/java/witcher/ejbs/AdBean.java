@@ -66,36 +66,4 @@ public class AdBean {
         em.merge(Ad);
     }
 
-    public Boolean pay(witcherorders Order) {
-        guest Witcher = Order.getWitcherId();
-        ad Ad = Order.getAdId();
-        guest AdOwner = Ad.getOwner();
-        creditcard AdOwnerCreditCard = AdOwner.getCreditcard();
-        int oldBalance = AdOwnerCreditCard.getBalance();
-        int adPrice = Ad.getPrice();
-        if (oldBalance >= adPrice) {
-            AdOwnerCreditCard.setBalance(oldBalance - adPrice);
-            creditcard WitcherCreditCard = Witcher.getCreditcard();
-            int witcherBalance = WitcherCreditCard.getBalance();
-            WitcherCreditCard.setBalance(witcherBalance + adPrice);
-            AdOwner.setRating(AdOwner.getRating() + adPrice);
-            Witcher.setRating(Witcher.getRating() + adPrice);
-            em.merge(Witcher);
-            em.merge(AdOwner);
-            em.merge(AdOwnerCreditCard);
-            em.merge(WitcherCreditCard);
-            witcherorders orderToDelete = em.merge(Order);
-            em.remove(orderToDelete);
-            ad adToDelete = em.merge(Ad);
-            em.remove(adToDelete);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void rejectComplitedOrder(witcherorders Order) {
-        witcherorders orderToDelete = em.merge(Order);
-        em.remove(orderToDelete);
-    }
 }

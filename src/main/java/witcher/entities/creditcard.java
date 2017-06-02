@@ -106,6 +106,14 @@ public class creditcard implements Serializable {
     public void setGuest(guest guest) {
         this.guest = guest;
     }
+    
+    public bank getBank() {
+        return bank;
+    }
+
+    public void setBank(bank bank) {
+        this.bank = bank;
+    }
 
     @Override
     public int hashCode() {

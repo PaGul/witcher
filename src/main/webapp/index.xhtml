@@ -32,6 +32,11 @@
                 <p:commandButton action="get_money.xhtml"
                                  value="Get money"></p:commandButton>
             </h:form>
+            
+            <h:form rendered="#{!login.loggedSession}">
+                <p:commandButton action="change_bank.xhtml"
+                                 value="Change bank"></p:commandButton>
+            </h:form>
 
             <h:form>
                 <p:commandButton rendered="#{!login.loggedSession}" value="Change password" action="changepassword.xhtml"/>
