@@ -35,6 +35,10 @@ public class guest_instance implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().redirect("error.xhtml");
         }
     }
+    
+//    public Boolean checkIfMyProfile() {
+//        return SessionUtils.getUser()!=null && getGuest().getId()==getMyId();
+//    }
 
     public guest getGuest() {
         return guestBean.getGuestById(getQuery());
@@ -45,6 +49,6 @@ public class guest_instance implements Serializable {
     }
 
     public Integer getMyId() {
-        return SessionUtils.getUser().getId();
+        return (SessionUtils.getUser()!=null)?SessionUtils.getUser().getId():-1;
     }
 }

@@ -24,7 +24,10 @@ public class SignUpHasSecretQuestion implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        HtmlInputText text = (HtmlInputText) FacesContext.getCurrentInstance().getViewRoot().findComponent("j_idt6:squestion");
+        HtmlInputText text = (HtmlInputText) FacesContext.getCurrentInstance().getViewRoot().findComponent("j_idt21:squestion");
+        if (text==null) {
+            throw new ValidatorException(new FacesMessage("Program has error.Sorry"));
+        }
         String question = (String) text.getValue();
         String answer = (String) value;
         if ((question==null || question.length()<1 || question.length()>15) ^ (answer==null || answer.length()<1 || answer.length()>15)) {

@@ -57,7 +57,7 @@ public class monster_profile implements Serializable{
     }
     
     public Boolean hasPhoto() {
-        return (Monster.getPhoto()!=null);
+        return (Monster!=null && Monster.getPhoto()!=null);
     }
     
 }

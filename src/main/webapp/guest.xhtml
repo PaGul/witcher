@@ -15,11 +15,11 @@
         Job: #{guest_instance.job} <br/>
         Balance: #{guest_instance.guest.creditcard.balance} <br/>
         Rating: #{guest_instance.guest.rating} <br/>
-        <h:form rendered="#{witcher_user.witcherLoggedSession}">
+        <h:form rendered="#{guest_instance.guest.id eq guest_instance.myId and witcher_user.witcherLoggedSession}">
             <p:commandButton  action = "witcher_additional_params" value="Add additional info"/>
             <br/>
         </h:form>
-        <h:form rendered="#{customer_user.customerLoggedSession}">
+        <h:form rendered="#{guest_instance.guest.id eq guest_instance.myId and customer_user.customerLoggedSession}">
             <p:commandButton  action = "customer_additional_params" value="Add additional info"/>
             <br/>
         </h:form>

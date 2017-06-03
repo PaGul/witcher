@@ -26,7 +26,7 @@
                         <p:menuitem value="Get notifications"  url="notifications.xhtml"/>
                         <p:menuitem value="Add new ad"  url="addNewAd.xhtml"/>
                     </p:submenu>
-                    <p:menuitem rendered="#{customer_user.checkNotifications()}"  style="color: red; font-weight: bold" 
+                    <p:menuitem rendered="#{customer_user.checkNotifications()}" url="notifications.xhtml" style="color: red; font-weight: bold" 
                                 value="You have new notifications"/>
                     <p:menuitem value="Quit" rendered="#{!login.loggedSession}" action="#{logout.logout()}" update="bar" icon="ui-icon-close" />
                 </p:menubar>

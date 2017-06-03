@@ -39,6 +39,7 @@ public class AdBean {
         try {
             idInteger = Integer.parseInt(id);
         } catch (NumberFormatException e) {
+            return null;
         }
         TypedQuery<ad> query = em.createNamedQuery("ad.findById", ad.class);
         TypedQuery<ad> adByIdQuery = query.setParameter("id", idInteger);
@@ -51,7 +52,9 @@ public class AdBean {
     }
 
     public ad getAdById(String id) {
-        ad ad_instance = (ad) getAdsByIdQuery(id).getSingleResult();
+        TypedQuery<ad> adsByIdQuery = getAdsByIdQuery(id);
+        if (adsByIdQuery==null) return null;
+        ad ad_instance = adsByIdQuery.getSingleResult();
         return ad_instance;
     }
 
