@@ -1,0 +1,30 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+>
+   <ui:define name="title">Profile</ui:define>
+
+    <ui:define name="content">
+        #{guest_instance.checkIfQueryExists()}
+        Login: #{guest_instance.guest.login} <br/>
+        Name: #{guest_instance.guest.name} <br/>
+        Email: #{guest_instance.guest.email} <br/>
+        Job: #{guest_instance.job} <br/>
+        Balance: #{guest_instance.guest.creditcard.balance} <br/>
+        Rating: #{guest_instance.guest.rating} <br/>
+        <h:form rendered="#{guest_instance.guest.id eq guest_instance.myId and witcher_user.witcherLoggedSession}">
+            <p:commandButton  action = "witcher_additional_params" value="Add additional info"/>
+            <br/>
+        </h:form>
+        <h:form rendered="#{guest_instance.guest.id eq guest_instance.myId and customer_user.customerLoggedSession}">
+            <p:commandButton  action = "customer_additional_params" value="Add additional info"/>
+            <br/>
+        </h:form>
+        <h:outputLink value="index.xhtml">
+            <h:outputText value="Back to main page"/>
+        </h:outputLink>
+    </ui:define>
+</ui:composition>

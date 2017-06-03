@@ -1,0 +1,27 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+>
+   <ui:define name="title">Get money</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panel" header="Get money" style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="money" value="How much money do you need?" />
+                    <p:spinner id="money" value="#{get_money.money}" min="0" max="1000" required="true" />
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton update="panel" action="#{get_money.addMoney()}"
+                             value="Get money"></p:commandButton>
+        </h:form>
+        <br/>
+        <h:form>
+            <p:commandButton action="index" 
+                             value="Cancel"></p:commandButton>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,24 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
+                >
+    <ui:define name="title">Promote ad</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panel" header="Buy the rating" style="margin-bottom:10px;">
+                <p:messages id="messages" />
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="money" value="How much money do you invest?" />
+                    <p:spinner id="money" value="#{promotion.money}" min="0" max="1000" required="true" validator="enoughMoney" />
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton update="panel" action="#{promotion.promote}"
+                             value="Promote"></p:commandButton>
+        </h:form>
+    </ui:define>
+</ui:composition>

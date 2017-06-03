@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <body>
+        <ui:composition>
+            <h:form id="bar">
+                <p:menubar style="margin-top:20px">
+                    <p:menuitem value="Home" url="index.xhtml" />
+                    <p:menuitem rendered="#{login.loggedSession}" url="signin.xhtml" value="Sign in"/>
+                    <p:menuitem rendered="#{login.loggedSession}" url="signup.xhtml" value="Sign up"/>
+                    <p:submenu label="My profile" icon="ui-icon-check" rendered="#{!login.loggedSession}">
+                        <p:menuitem value="Profile page"
+                                    url="guest.xhtml?gquery=#{guest_instance.myId}">
+                        </p:menuitem>
+                        <p:menuitem url="get_money.xhtml" value="Get money" />
+                        <p:menuitem url="change_bank.xhtml" value="Change bank" />
+                        <p:menuitem url="changepassword.xhtml" value="Change password" />
+                    </p:submenu>
+                    <p:submenu label="Customer options" rendered="#{customer_user.customerLoggedSession}">
+                        <p:menuitem value="Get notifications"  url="notifications.xhtml"/>
+                        <p:menuitem value="Add new ad"  url="addNewAd.xhtml"/>
+                    </p:submenu>
+                    <p:menuitem rendered="#{customer_user.checkNotifications()}" url="notifications.xhtml" style="color: red; font-weight: bold" 
+                                value="You have new notifications"/>
+                    <p:menuitem value="Quit" rendered="#{!login.loggedSession}" action="#{logout.logout()}" update="bar" icon="ui-icon-close" />
+                </p:menubar>
+            </h:form>
+
+        </ui:composition>
+    </body>
+</html>

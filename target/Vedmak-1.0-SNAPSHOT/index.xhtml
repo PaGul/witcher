@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets" 
+    xmlns:p="http://primefaces.org/ui"
+>
+   <ui:define name="title">Home page</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:dataTable value="#{ad_list.ads}" var="ad_from_list" widgetVar="adTable"
+                         paginator="true" rows="10"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15,25,100" stickyHeader="true"
+                         emptyMessage="No ads found with given criteria"
+                         filteredValue="#{ad_list.filteredAds}"
+                         sortBy="#{ad_from_list.rating}" sortOrder="DESCENDING">
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Search all fields:" />
+                        <p:inputText id="globalFilter" onkeyup="PF('adTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+                    </p:outputPanel>
+                </f:facet>
+
+                <p:column filterBy="#{ad_from_list.header}" sortBy="#{ad_from_list.adDate}" 
+                          filterStyle="display:none" headerText="Header">
+                    <h:outputLink value="ad.xhtml">
+                        <f:param name="adquery" value="#{ad_from_list.id}"/>
+                        <h:outputText value="#{ad_from_list.header}"/>
+                    </h:outputLink>
+
+                </p:column>
+                
+                <p:column filterBy="#{ad_from_list.bestiary.name}" sortBy="#{ad_from_list.monsterId}" 
+                          filterStyle="display:none" headerText="Moster type">
+                    <h:outputLink value="monster.xhtml">
+                        <f:param name="monster" value="#{ad_from_list.bestiary.id}"/>
+                        <h:outputText value="#{ad_from_list.bestiary.name}"/>
+                    </h:outputLink>
+
+                </p:column>
+
+                <p:column filterBy="#{ad_from_list.price}" sortBy="#{ad_from_list.price}" 
+                          filterStyle="display:none" headerText="Price">
+                    <h:outputText value="#{ad_from_list.price}"/>
+
+                </p:column>
+
+                <p:column filterBy="#{ad_from_list.adDate}" sortBy="#{ad_from_list.adDate}" 
+                          filterStyle="display:none" headerText="Date">
+                    <h:outputText value="#{ad_from_list.adDate}"/>
+                </p:column>
+                <p:column filterBy="#{ad_from_list.owner.login}" sortBy="#{ad_from_list.rating}" 
+                          filterStyle="display:none" headerText="Owner (sort by rating)">
+                    <h:outputLink value="guest.xhtml">
+                        <f:param name="gquery" value="#{ad_from_list.owner.id}"/>
+                        <h:outputText value="#{ad_from_list.owner.login}"/>
+                    </h:outputLink>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

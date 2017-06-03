@@ -1,0 +1,27 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="title">Change bank</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="banks" value="Banks: " />
+                <h:selectOneMenu value="#{change_bank.bankId}" >
+                    <f:selectItems value="#{change_bank.allBanks}"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+            <p:commandButton action="#{change_bank.changeBank()}"
+                             value="Change bank"></p:commandButton>
+        </h:form>
+        <br/>
+        <h:form>
+            <p:commandButton action="index" 
+                             value="Cancel"></p:commandButton>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,28 @@
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:p="http://primefaces.org/ui"
+                >
+    <ui:define name="title">Add additional information</ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panel" header="Witcher additional params" style="margin-bottom:10px;">
+                <p:messages id="messages" />
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Do you have horse?" />
+                    <p:selectOneMenu value = "#{witcher_user.additionalParams.hasHorse}"> 
+                        <f:selectItem itemValue = "0" itemLabel = "No" /> 
+                        <f:selectItem itemValue = "1" itemLabel = "Yes" /> 
+                    </p:selectOneMenu> 	
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton update="panel" action="#{witcher_user.addInfoAboutHorse()}"
+                             value="Add info"></p:commandButton>
+
+
+        </h:form>
+    </ui:define>
+</ui:composition>
