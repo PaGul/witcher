@@ -14,19 +14,26 @@
                 <p:messages id="messages" />
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:outputLabel for="header" value="Header" />
-                    <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true" maxlength="100"></p:inputText>
+                    <p:inputText id="header" value="#{new_ad.adInstance.header}" required="true">
+                        <f:validateLength minimum="1" maximum="100"/>
+                    </p:inputText>
                 </h:panelGrid>
 
-                <p:outputLabel for="text" value="Text " />
-                <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="1000" counterTemplate="{0} characters remaining." autoResize="false" required="true"/>
+                <p:outputLabel for="text" value="Text" />
+                <p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" autoResize="false" required="true">
+                <!--<p:inputTextarea id="text" value="#{new_ad.adInstance.text}" rows="5" cols="30" counter="display" maxlength="1000" counterTemplate="{0} characters remaining." autoResize="false" required="true">-->
+                    <f:validateLength maximum="1000"/>
+                </p:inputTextarea>
                 <h:outputText id="display" />
 
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="price" value="Price: " />
-                    <p:spinner id="price" value="#{new_ad.adInstance.price}" min="0" max="1000" required="true" />
+                    <p:outputLabel for="price" value="Price" />
+                    <p:spinner id="price" value="#{new_ad.adInstance.price}" required="true">
+                        <f:validateLongRange minimum="0" maximum="1000"/>
+                    </p:spinner>
                 </h:panelGrid>
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="Monster type" value="Price: " />
+                    <h:outputLabel for="Monster type" value="Monster type: " />
                     <h:selectOneMenu value="#{new_ad.adInstance.monsterId}" >
                         <f:selectItems value="#{new_ad.allMonsters}"/>
                     </h:selectOneMenu>
