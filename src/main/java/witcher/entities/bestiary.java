@@ -5,7 +5,7 @@
  */
 package witcher.entities;
 
-import java.io.Serializable;
+import entitiesInterfaces.*;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "bestiary.findById", query = "SELECT b FROM bestiary b WHERE b.id = :id"),
     @NamedQuery(name = "bestiary.findByName", query = "SELECT b FROM bestiary b WHERE b.name = :name"),
     @NamedQuery(name = "bestiary.findByDescription", query = "SELECT b FROM bestiary b WHERE b.description = :description")})
-public class bestiary implements Serializable {
+public class bestiary implements bestiaryInterface {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,45 +71,57 @@ public class bestiary implements Serializable {
         this.photo = photo;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
     
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @Override
     public byte[] getPhoto() {
         return photo;
     }
 
+    @Override
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
-    public ad getAd() {
+    @Override
+    public adInterface getAd() {
         return ad;
     }
 
-    public void setAd(ad ad) {
-        this.ad = ad;
+    @Override
+    public void setAd(adInterface ad) {
+        this.ad = (ad) ad;
     }
+
+    
 
     @Override
     public int hashCode() {

@@ -6,7 +6,7 @@
 
 package witcher.entities;
 
-import java.io.Serializable;
+import entitiesInterfaces.*;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "creditcard.findById", query = "SELECT c FROM creditcard c WHERE c.id = :id"),
     @NamedQuery(name = "creditcard.findByBalance", query = "SELECT c FROM creditcard c WHERE c.balance = :balance"),
     @NamedQuery(name = "creditcard.findByBankId", query = "SELECT c FROM creditcard c WHERE c.bankId = :bankId")})
-public class creditcard implements Serializable {
+public class creditcard implements creditcardInterface {
     @Id
     @SequenceGenerator(name = "CR_CARD_SEQ_GEN", sequenceName = "CR_CARD_SEQ", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CR_CARD_SEQ_GEN")
@@ -75,44 +75,54 @@ public class creditcard implements Serializable {
         this.bankId = bankId;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public int getBalance() {
         return balance;
     }
 
+    @Override
     public void setBalance(int balance) {
         this.balance = balance;
     }
 
+    @Override
     public int getBankId() {
         return bankId;
     }
 
+    @Override
     public void setBankId(int bankId) {
         this.bankId = bankId;
     }
 
-    public guest getGuest() {
+    @Override
+    public guestInterface getGuest() {
         return guest;
     }
 
-    public void setGuest(guest guest) {
-        this.guest = guest;
+    @Override
+    public void setGuest(guestInterface guest) {
+        this.guest = (guest) guest;
     }
-    
-    public bank getBank() {
+
+    @Override
+    public bankInterface getBank() {
         return bank;
     }
 
-    public void setBank(bank bank) {
-        this.bank = bank;
+    @Override
+    public void setBank(bankInterface bank) {
+        this.bank = (bank) bank;
     }
 
     @Override

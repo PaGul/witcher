@@ -6,7 +6,7 @@
 
 package witcher.entities;
 
-import java.io.Serializable;
+import entitiesInterfaces.*;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -48,7 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "guest.findBySecretanswer", query = "SELECT g FROM guest g WHERE g.secretanswer = :secretanswer"),
     @NamedQuery(name = "guest.findByRating", query = "SELECT g FROM guest g WHERE g.rating = :rating"),
     @NamedQuery(name = "guest.findByCrCardId", query = "SELECT g FROM guest g WHERE g.crCardId = :crCardId")})
-public class guest implements Serializable {
+public class guest implements guestInterface {
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "SEQ_GEN", sequenceName = "GUEST_SEQ", allocationSize = 1)
@@ -105,7 +104,7 @@ public class guest implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "guest")
     private witcher witcher;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "witcherId")
-    private Collection<witcherorders> witcherordersCollection;
+    private Collection<witcherorders> witcherordersInterfaceCollection;
 
     public guest() {
         this.rating = 0;
@@ -126,110 +125,114 @@ public class guest implements Serializable {
         this.crCardId = crCardId;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getLogin() {
         return login;
     }
 
+    @Override
     public void setLogin(String login) {
         this.login = login;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @Override
     public String getEmail() {
         return email;
     }
 
+    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public Integer getUserType() {
         return userType;
     }
 
+    @Override
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
 
+    @Override
     public String getSecretquestion() {
         return secretquestion;
     }
 
+    @Override
     public void setSecretquestion(String secretquestion) {
         this.secretquestion = secretquestion;
     }
 
+    @Override
     public String getSecretanswer() {
         return secretanswer;
     }
 
+    @Override
     public void setSecretanswer(String secretanswer) {
         this.secretanswer = secretanswer;
     }
 
+    @Override
     public int getRating() {
         return rating;
     }
 
+    @Override
     public void setRating(int rating) {
         this.rating = rating;
     }
 
+    @Override
     public int getCrCardId() {
         return crCardId;
     }
 
+    @Override
     public void setCrCardId(int crCardId) {
         this.crCardId = crCardId;
     }
 
-    public creditcard getCreditcard() {
+    @Override
+    public creditcardInterface getCreditcard() {
         return creditcard;
     }
 
-    public void setCreditcard(creditcard creditcard) {
-        this.creditcard = creditcard;
-    }
-
-    @XmlTransient
-    public Collection<ad> getAdCollection() {
-        return adCollection;
-    }
-
-    public void setAdCollection(Collection<ad> adCollection) {
-        this.adCollection = adCollection;
-    }
-
-    @XmlTransient
-    public Collection<witcherorders> getWitcherordersCollection() {
-        return witcherordersCollection;
-    }
-
-    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
-        this.witcherordersCollection = witcherordersCollection;
+    @Override
+    public void setCreditcard(creditcardInterface creditcard) {
+        this.creditcard = (creditcard) creditcard;
     }
 
     @Override

@@ -6,6 +6,7 @@
 
 package witcher.entities;
 
+import entitiesInterfaces.*;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "bank.findById", query = "SELECT b FROM bank b WHERE b.id = :id"),
     @NamedQuery(name = "bank.findByCommision", query = "SELECT b FROM bank b WHERE b.commision = :commision"),
     @NamedQuery(name = "bank.findByName", query = "SELECT b FROM bank b WHERE b.name = :name")})
-public class bank implements Serializable {
+public class bank implements bankInterface {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -64,36 +65,42 @@ public class bank implements Serializable {
         this.name = name;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public double getCommision() {
         return commision;
     }
 
+    @Override
     public void setCommision(double commision) {
         this.commision = commision;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    public creditcard getCreditcard() {
+    public creditcardInterface getCreditcard() {
         return creditcard;
     }
 
-    public void setCreditcard(creditcard creditcard) {
-        this.creditcard = creditcard;
+    public void setCreditcard(creditcardInterface creditcard) {
+        this.creditcard = (creditcard) creditcard;
     }
 
     @Override

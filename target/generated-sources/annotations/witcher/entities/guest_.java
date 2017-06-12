@@ -10,7 +10,7 @@ import witcher.entities.customer;
 import witcher.entities.witcher;
 import witcher.entities.witcherorders;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-12T23:15:40")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-13T02:27:58")
 @StaticMetamodel(guest.class)
 public class guest_ { 
 
@@ -23,8 +23,8 @@ public class guest_ {
     public static volatile SingularAttribute<guest, String> password;
     public static volatile SingularAttribute<guest, String> secretanswer;
     public static volatile SingularAttribute<guest, witcher> witcher;
-    public static volatile CollectionAttribute<guest, witcherorders> witcherordersCollection;
     public static volatile SingularAttribute<guest, String> name;
+    public static volatile CollectionAttribute<guest, witcherorders> witcherordersInterfaceCollection;
     public static volatile SingularAttribute<guest, Integer> id;
     public static volatile SingularAttribute<guest, Integer> userType;
     public static volatile SingularAttribute<guest, String> email;

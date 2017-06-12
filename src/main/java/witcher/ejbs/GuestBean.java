@@ -128,7 +128,7 @@ public class GuestBean {
     }
     
     public void changeBalance(guest User, int delta) {
-        creditcard cr_card = User.getCreditcard();
+        creditcard cr_card = (creditcard) User.getCreditcard();
         int balance = cr_card.getBalance();
         cr_card.setBalance(balance+delta);
         em.merge(cr_card);

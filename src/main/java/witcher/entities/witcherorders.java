@@ -6,12 +6,7 @@
 
 package witcher.entities;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import entitiesInterfaces.*;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "witcherorders.findById", query = "SELECT w FROM witcherorders w WHERE w.id = :id"),
     @NamedQuery(name = "witcherorders.findByWitcherAndAd", query = "SELECT w FROM witcherorders w WHERE w.witcherId = :wid AND w.adId=:aid")})
 
-public class witcherorders implements Serializable {
+public class witcherorders implements witcherordersInterface {
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -83,45 +78,57 @@ public class witcherorders implements Serializable {
     }
 
     
+    @Override
     public int getNotificated() {
         return notificated;
     }
 
+    @Override
     public void setNotificated(Integer notificated) {
         this.notificated = notificated;
     }
 
+    @Override
     public byte[] getProof() {
         return proof;
     }
 
+    @Override
     public void setProof(byte[] proof) {
         this.proof = proof;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public ad getAdId() {
+    @Override
+    public adInterface getAdId() {
         return adId;
     }
 
-    public void setAdId(ad adId) {
-        this.adId = adId;
+    @Override
+    public void setAdId(adInterface adId) {
+        this.adId = (ad) adId;
     }
 
-    public guest getWitcherId() {
+    @Override
+    public guestInterface getWitcherId() {
         return witcherId;
     }
 
-    public void setWitcherId(guest witcherId) {
-        this.witcherId = witcherId;
+    @Override
+    public void setWitcherId(guestInterface witcherId) {
+        this.witcherId = (guest) witcherId;
     }
+
+    
 
     @Override
     public int hashCode() {
@@ -148,6 +155,7 @@ public class witcherorders implements Serializable {
         return "witcher.entities.witcherorders[ id=" + id + " ]";
     }
     
+    @Override
     public Boolean getProofed() {
         return getProof()!=null;
                 

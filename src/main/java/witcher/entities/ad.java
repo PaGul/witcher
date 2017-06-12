@@ -6,6 +6,7 @@
 
 package witcher.entities;
 
+import entitiesInterfaces.*;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -47,7 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ad.findByRating", query = "SELECT a FROM ad a WHERE a.rating = :rating"),
     @NamedQuery(name = "ad.findByAdDate", query = "SELECT a FROM ad a WHERE a.adDate = :adDate"),
     @NamedQuery(name = "ad.findByMonsterId", query = "SELECT a FROM ad a WHERE a.monsterId = :monsterId")})
-public class ad implements Serializable {
+public class ad implements adInterface {
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "AD_SEQ_GEN", sequenceName = "AD_SEQ", allocationSize = 1)
@@ -108,85 +109,94 @@ public class ad implements Serializable {
         this.monsterId = monsterId;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getHeader() {
         return header;
     }
 
+    @Override
     public void setHeader(String header) {
         this.header = header;
     }
 
+    @Override
     public String getText() {
         return text;
     }
 
+    @Override
     public void setText(String text) {
         this.text = text;
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
+    @Override
     public void setPrice(int price) {
         this.price = price;
     }
 
+    @Override
     public int getRating() {
         return rating;
     }
 
+    @Override
     public void setRating(int rating) {
         this.rating = rating;
     }
 
+    @Override
     public Date getAdDate() {
         return adDate;
     }
 
+    @Override
     public void setAdDate(Date adDate) {
         this.adDate = adDate;
     }
 
+    @Override
     public int getMonsterId() {
         return monsterId;
     }
 
+    @Override
     public void setMonsterId(int monsterId) {
         this.monsterId = monsterId;
     }
 
-    public bestiary getBestiary() {
+    @Override
+    public bestiaryInterface getBestiary() {
         return bestiary;
     }
 
-    public void setBestiary(bestiary bestiary) {
-        this.bestiary = bestiary;
+    @Override
+    public void setBestiary(bestiaryInterface bestiary) {
+        this.bestiary = (bestiary) bestiary;
     }
 
-    public guest getOwner() {
+    @Override
+    public guestInterface getOwner() {
         return owner;
     }
 
-    public void setOwner(guest owner) {
-        this.owner = owner;
-    }
-
-    @XmlTransient
-    public Collection<witcherorders> getWitcherordersCollection() {
-        return witcherordersCollection;
-    }
-
-    public void setWitcherordersCollection(Collection<witcherorders> witcherordersCollection) {
-        this.witcherordersCollection = witcherordersCollection;
+    @Override
+    public void setOwner(guestInterface owner) {
+        this.owner = (guest) owner;
     }
 
     @Override

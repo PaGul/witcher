@@ -31,17 +31,17 @@ public class BankBean {
     }
 
     public Boolean pay(witcherorders Order) {
-        guest Witcher = Order.getWitcherId();
-        ad Ad = Order.getAdId();
-        guest AdOwner = Ad.getOwner();
-        creditcard AdOwnerCreditCard = AdOwner.getCreditcard();
+        guest Witcher = (guest) Order.getWitcherId();
+        ad Ad = (ad) Order.getAdId();
+        guest AdOwner = (guest) Ad.getOwner();
+        creditcard AdOwnerCreditCard = (creditcard) AdOwner.getCreditcard();
         int oldBalance = AdOwnerCreditCard.getBalance();
         int adPrice = Ad.getPrice();
         // деньги за пользование сайтом и коммиссия банка
         int commision = (int)(adPrice*0.03 + adPrice*AdOwnerCreditCard.getBank().getCommision());
         if (oldBalance >= adPrice + commision) {
             AdOwnerCreditCard.setBalance(oldBalance - adPrice - commision);
-            creditcard WitcherCreditCard = Witcher.getCreditcard();
+            creditcard WitcherCreditCard = (creditcard) Witcher.getCreditcard();
             int witcherBalance = WitcherCreditCard.getBalance();
             WitcherCreditCard.setBalance(witcherBalance + adPrice);
             AdOwner.setRating(AdOwner.getRating() + adPrice);
@@ -71,7 +71,7 @@ public class BankBean {
     }
     
     public void changeBank(guest User, Integer bankId) {
-        creditcard userCreditCard = User.getCreditcard();
+        creditcard userCreditCard = (creditcard) User.getCreditcard();
         userCreditCard.setBankId(bankId);
         em.merge(userCreditCard);
     }
