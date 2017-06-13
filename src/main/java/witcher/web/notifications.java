@@ -31,7 +31,8 @@ public class notifications implements Serializable {
     private AdBean adBean;
     private List<witcherorders> notificatedOrders;
     
-    private String notificationType = "Only new";
+//    private String notificationType = "Only new";
+    private String notificationType = "All";
 
     public String getNotificationType() {
         return notificationType;
@@ -41,6 +42,10 @@ public class notifications implements Serializable {
         this.notificationType = notificationType;
     }
     
+    public void makeAllOld() {
+        guest Customer = SessionUtils.getUser();
+        notificationBean.makeThemOld(Customer);
+    }
     
 
     public List<witcherorders> getNotificatedOrders() {

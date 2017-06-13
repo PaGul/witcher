@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import witcher.entities.ad;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-13T02:27:58")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-13T08:00:30")
 @StaticMetamodel(bestiary.class)
 public class bestiary_ { 
 

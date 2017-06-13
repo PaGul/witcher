@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package witcher.web;
 
+import entitiesInterfaces.guestInterface;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -23,10 +23,10 @@ public class get_money extends guest_instance {
 
     public get_money() {
     }
-    
+
     @EJB
     private GuestBean guestBean;
-    
+
     int money;
 
     public int getMoney() {
@@ -36,9 +36,9 @@ public class get_money extends guest_instance {
     public void setMoney(int money) {
         this.money = money;
     }
-    
+
     public String addMoney() {
-        guest user = SessionUtils.getUser();
+        guestInterface user = SessionUtils.getUserObject();
         guestBean.changeBalance(user, money);
         return "index";
     }

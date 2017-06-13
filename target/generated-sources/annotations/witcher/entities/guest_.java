@@ -10,7 +10,7 @@ import witcher.entities.customer;
 import witcher.entities.witcher;
 import witcher.entities.witcherorders;
 
-@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-13T02:27:58")
+@Generated(value="EclipseLink-2.5.1.v20130918-rNA", date="2017-06-13T08:00:30")
 @StaticMetamodel(guest.class)
 public class guest_ { 
 

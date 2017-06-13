@@ -5,6 +5,8 @@
  */
 package witcher.web;
 
+import entitiesInterfaces.adInterface;
+import entitiesInterfaces.guestInterface;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,26 +33,32 @@ public class new_ad implements Serializable {
 
     @EJB
     private AdBean adBean;
-    
+
     @EJB
     private MonsterBean monsterBean;
 
-    public ad adInstance = new ad();
+    public adInterface adInstance = new ad();
 
-    public ad getAdInstance() {
+    public adInterface getAdInstance() {
         return adInstance;
     }
 
-    public void setAdInstance(ad adInstance) {
+    public void setAdInstance(adInterface adInstance) {
         this.adInstance = adInstance;
     }
 
     public String newAd() {
-        guest user = SessionUtils.getUser();
+        guestInterface user = SessionUtils.getUserObject();
         adInstance.setOwner(user);
         Date date = new Date();
         adInstance.setAdDate(date);
-        adBean.newAd(adInstance);
+        if (adInstance.getHeader() != null && adInstance.getHeader().length() > 0 && adInstance.getHeader().length() <= 100) {
+            if (adInstance.getText() == null || (adInstance.getText() != null && adInstance.getText().length() <= 1000)) {
+                if (adInstance.getPrice() >= 0 && adInstance.getPrice() <= 1000) {
+                    adBean.newAd(adInstance);
+                }
+            }
+        }
         return "index";
     }
 

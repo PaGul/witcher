@@ -6,7 +6,6 @@
 
 package witcher.testentities;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -29,7 +28,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import entitiesInterfaces.*;
 
 /**
@@ -99,6 +97,16 @@ public class adTest implements adInterface {
         this.id = id;
     }
 
+    public adTest(String header, String text, int price, int rating, Date adDate, int monsterId) {
+        this.id = id;
+        this.header = header;
+        this.text = text;
+        this.price = price;
+        this.rating = rating;
+        this.adDate = adDate;
+        this.monsterId = monsterId;
+    }
+    
     public adTest(Integer id, String header, String text, int price, int rating, Date adDate, int monsterId) {
         this.id = id;
         this.header = header;

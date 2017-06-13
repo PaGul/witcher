@@ -5,11 +5,15 @@
  */
 package witcher.tests;
 
+import java.io.Serializable;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
-import org.junit.*;
-import static org.junit.Assert.assertEquals;
+import witcher.ejbs.GuestBean;
 import witcher.entities.guest;
 import witcher.testentities.guestTest;
 import witcher.util.SessionUtils;
@@ -19,38 +23,65 @@ import witcher.web.get_money;
  *
  * @author pavelgulaev
  */
-public class get_money_test {
+@ManagedBean
+@RequestScoped
+public class get_money_test implements Serializable {
     
     @PersistenceContext(unitName = "VedmakJSFPU")
     private EntityManager em;
     
-    public void runBeforeTestMethod() {
-        HttpSession session = SessionUtils.getSession();
-        if (session!=null) {
-            session.invalidate();
-        }
+    @EJB
+    private GuestBean guestBean;
+    
+    public EntityManager getEm() {
+        return em;
     }
     
-    public void runAfterTestMethod() {
-        guest user = SessionUtils.getUser();
-        user.getCreditcard().setBalance(0);
+    guest prevUser;
+    HttpSession session;
+
+    private void runBeforeTestMethod() {
+        session = SessionUtils.getSession();
+        if (session != null && SessionUtils.getUserObject()!=null) {
+            prevUser = SessionUtils.getUser();
+            session.invalidate();
+        } 
     }
 
-    public boolean addMoney_test() {
+    public boolean addMoney_test(Object balance) {
         runBeforeTestMethod();
-        get_money testClass = new get_money();
+        boolean result = false;
         login();
-        testClass.setMoney(10);
-        testClass.addMoney();
-        guestTest changedGuest = em.find(guestTest.class, SessionUtils.getUserId());
-        boolean result = (changedGuest.getCreditcard().getBalance() == 10);
+        try {
+            guestBean.changeBalance(SessionUtils.getUserObject(), (int) balance);
+            guestTest changedGuest = em.find(guestTest.class, SessionUtils.getUserId());
+            if (changedGuest == null) {
+                result = false;
+            } else {
+                result = (changedGuest.getCreditcard().getBalance() == (int) balance);
+            }
+        } catch (Exception exp) {
+            result = false;
+        }
         runAfterTestMethod();
         return result;
     }
-    
+
+    private void runAfterTestMethod() {
+        guestTest user = (guestTest) SessionUtils.getUserObject();
+        user.getCreditcard().setBalance(0);
+        if (prevUser != null) {
+            session.setAttribute("user", prevUser);
+            session.setAttribute("userid", prevUser.getId());
+        } else {
+            session.invalidate();
+        }
+    }
+
     private void login() {
-        guestTest currGuest = new guestTest(1, "Test", "1234", "test@test.com", "Test", 1, 0, 1);
-        HttpSession session = SessionUtils.getSession();
+//        guestTest currGuest = em.createNamedQuery("guestTest.findById", guestTest.class).setParameter("id", 1).getSingleResult();
+        guestTest currGuest = em.find(guestTest.class, 1);
+        session = SessionUtils.getNewSession();
         session.setAttribute("user", currGuest);
         session.setAttribute("userid", currGuest.getId());
     }

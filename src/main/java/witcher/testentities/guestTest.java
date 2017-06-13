@@ -32,8 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author pavelgulaev
  */
 @Entity
-@Table(name = "GUEST_TEST")
+@Table(name = "GUESTTEST")
 @XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "guestTest.findAll", query = "SELECT g FROM guestTest g"),
+    @NamedQuery(name = "guestTest.findById", query = "SELECT g FROM guestTest g WHERE g.id = :id")})
 public class guestTest implements guestInterface {
     private static final long serialVersionUID = 1L;
     @Id

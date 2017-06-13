@@ -12,7 +12,9 @@ witcher/web/ad_list.class
 entitiesInterfaces/bestiaryInterface.class
 witcher/testentities/bestiaryTest_.class
 witcher/entities/bestiary_.class
+witcher/web/tester$TestAd.class
 witcher/entities/creditcard.class
+witcher/web/tester.class
 witcher/web/customer_user.class
 witcher/testentities/bankTest.class
 witcher/entities/customer_.class
@@ -45,6 +47,7 @@ witcher/ejbs/GuestBean.class
 witcher/entities/bank_.class
 witcher/ejbs/NotificationBean.class
 witcher/web/recoverpassword.class
+witcher/tests/new_ad_test.class
 witcher/web/get_money.class
 witcher/web/witcher_user.class
 witcher/web/image.class

@@ -11,8 +11,10 @@
         </title>        
     </h:head>
     <h:body>
-        <h:form>
-            <p:commandButton></p:commandButton>
+        <h:form id="test">
+            <p:panel rendered="#{get_money_test.addMoney_test(10)}">Test are successful</p:panel>
+            <p:panel rendered="#{!tester.result}">Test are failed</p:panel>
+            <!--<p:commandButton value="Start test!" action="#{tester.runTests()}" update="test"></p:commandButton>-->
         </h:form>
     </h:body>
 </html>

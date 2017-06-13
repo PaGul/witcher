@@ -5,6 +5,7 @@
  */
 package witcher.ejbs;
 
+import entitiesInterfaces.adInterface;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -58,7 +59,7 @@ public class AdBean {
         return ad_instance;
     }
 
-    public void newAd(ad adInstance) {
+    public void newAd(adInterface adInstance) {
         em.persist(adInstance);
     }
 

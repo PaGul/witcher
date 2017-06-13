@@ -53,6 +53,13 @@ public class NotificationBean {
         return notificatedOrdersQueryList;
     }
     
+    public void makeThemOld(guest Customer) {
+        List<witcherorders> notificatedOrdersQueryList = getNewOrders(Customer);
+        for (witcherorders order : notificatedOrdersQueryList) {
+            order.setNotificated(1);
+        }
+    }
+    
     public List<witcherorders> getAllOrders(guest Customer) {
         Query userAdsQuery = em.createQuery("SELECT a.id FROM ad a WHERE a.owner=:userid");
         List<Integer> userAdsIdList = userAdsQuery.setParameter("userid", Customer).getResultList();
@@ -66,7 +73,9 @@ public class NotificationBean {
     }
 
     public witcherorders getOrder(Integer id) {
-        return em.find(witcherorders.class, id);
+        witcherorders result = em.find(witcherorders.class, id);
+        result.setNotificated(1);
+        return result;
     }
 
 }
